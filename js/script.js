@@ -22,7 +22,7 @@ function typed(el,a,done,d=65,p=220){el.innerHTML="";let t=0;a.forEach(x=>{const
 function revealTiles(sel){document.querySelectorAll(sel).forEach((x,i)=>setTimeout(()=>x.classList.add("sense-tile-visible"),i*280))}
 function saveUnlock(i){if(i>unlocked){unlocked=i;try{sessionStorage.setItem(STORAGE,String(unlocked))}catch(e){}}renderWorlds()}
 function renderWorlds(){document.querySelectorAll(".world").forEach((b,i)=>{b.className="world world-visible";if(atlasComplete){b.disabled=false;b.setAttribute("aria-current","false");b.classList.add("world-open");return}b.disabled=i>unlocked;b.setAttribute("aria-current",i===unlocked?"step":"false");if(i===unlocked)b.classList.add("world-next");else if(i<unlocked)b.classList.add("world-completed");else b.classList.add("world-locked")})}
-function login(){const v=$("entry-password").value.trim();if(v!==PASS.entry){$("login-message").textContent="To jeszcze nie ten klucz.";$("login-message").classList.add("message-visible");$("entry-password").value="";return}go("welcome-screen",700);setTimeout(()=>typed($("welcome-text"),WELCOME,()=>$("continue-to-atlas").classList.add("visible-control"),42,150),1000)}
+function login(){const v=$("entry-password").value.trim();if(v!==PASS.entry){$("login-message").textContent="To jeszcze nie ten klucz.";$("login-message").classList.add("message-visible");$("entry-password").value="";return}unlocked=0;atlasComplete=false;try{sessionStorage.removeItem(STORAGE);sessionStorage.removeItem(COMPLETE_STORAGE)}catch(e){}renderWorlds();go("welcome-screen",700);setTimeout(()=>typed($("welcome-text"),WELCOME,()=>$("continue-to-atlas").classList.add("visible-control"),42,150),1000)}
 function intro(screen,textId,text,buttonId){go(screen);setTimeout(()=>typed($(textId),text,()=>$(buttonId).classList.add("visible-control"),75,340),1100)}
 function setTiles(container,data,attr){const c=$(container);c.innerHTML=Object.entries(data).map(([k,v])=>`<button class="sense-tile" data-${attr}="${k}">${v.title}</button>`).join("");revealTiles(`#${container} .sense-tile`)}
 function openWorld(i){if(i>unlocked)return;if(i===0)intro("sound-intro-screen","sound-intro-text",SOUND_INTRO,"open-sound-tiles");if(i===1)intro("image-intro-screen","image-intro-text",IMAGE_INTRO,"open-image-tiles");if(i===2)intro("taste-intro-screen","taste-intro-text",TASTE_INTRO,"open-taste-tiles");if(i===3)intro("smell-intro-screen","smell-intro-text",SMELL_INTRO,"open-smell-tiles");if(i===4)openTouch()}
@@ -64,7 +64,8 @@ function buildAudioPlayer(track){
  audio.addEventListener("pause",()=>{toggle.textContent="▶";toggle.setAttribute("aria-label","Odtwórz")});
  audio.addEventListener("ended",()=>{audio.currentTime=0;sync()});
  toggle.addEventListener("click",()=>{if(audio.paused)audio.play().catch(()=>{});else audio.pause()});
- progress.addEventListener("input",()=>{if(Number.isFinite(audio.duration))audio.currentTime=audio.duration*Number(progress.value)/100});
+ progress.addEventListener("input",()=>{if(Number.isFinite(audio.duration)){const target=audio.duration*Number(progress.value)/100;current.textContent=formatAudioTime(target)}});
+ progress.addEventListener("change",()=>{if(Number.isFinite(audio.duration)){audio.currentTime=audio.duration*Number(progress.value)/100;sync()}});
  audio.play().catch(()=>{toggle.textContent="▶";toggle.setAttribute("aria-label","Odtwórz")});
 }
 function setPanelState(panelId,open,instant=false){
