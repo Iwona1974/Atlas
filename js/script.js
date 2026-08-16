@@ -200,29 +200,30 @@ $("open-image-tiles").onclick=()=>{setTiles("image-tiles",images,"image");go("im
   const video=$("image-video");
   stopSpotify();
   video.pause();
-  video.src=currentImage.video;
-  video.preload="auto";
-  video.load();
   go("video-screen",0);
 
-  const p=video.play();
-  if(p&&typeof p.catch==="function")p.catch(()=>{});
+  video.removeAttribute("src");
+  video.load();
 
   atlasLoadBlobUrl(currentImage.video).then(blobUrl=>{
    if(currentScreen!==screens["video-screen"])return;
-   const wasPlaying=!video.paused;
-   const at=Number.isFinite(video.currentTime)?video.currentTime:0;
    video.src=blobUrl;
+   video.preload="auto";
    video.load();
-   const restore=()=>{
-    try{if(Number.isFinite(video.duration)&&video.duration>0)video.currentTime=Math.min(at,Math.max(0,video.duration-.05))}catch(e){}
-    if(wasPlaying){
-     const q=video.play();
-     if(q&&typeof q.catch==="function")q.catch(()=>{});
-    }
+
+   const start=()=>{
+    try{video.currentTime=0}catch(e){}
+    const p=video.play();
+    if(p&&typeof p.catch==="function")p.catch(()=>{});
    };
-   if(video.readyState>=1)restore();else video.addEventListener("loadedmetadata",restore,{once:true});
-  }).catch(()=>{});
+   if(video.readyState>=1)start();
+   else video.addEventListener("loadedmetadata",start,{once:true});
+  }).catch(()=>{
+   video.src=currentImage.video;
+   video.load();
+   const p=video.play();
+   if(p&&typeof p.catch==="function")p.catch(()=>{});
+  });
  }else{
   openGallery(currentImage.media,"image-detail-screen");
  }
