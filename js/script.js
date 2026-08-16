@@ -66,11 +66,23 @@ function atlasPauseMedia(){
  if(video&&!video.paused)video.pause();
 }
 
+
+const atlasVideoBlobCache=new Map();
+function atlasPrefetchVideo(src){
+ if(atlasVideoBlobCache.has(src))return atlasVideoBlobCache.get(src);
+ const promise=fetch(src,{cache:"no-store"})
+  .then(r=>{if(!r.ok)throw new Error("video");return r.blob()})
+  .then(blob=>URL.createObjectURL(blob))
+  .catch(()=>null);
+ atlasVideoBlobCache.set(src,promise);
+ return promise;
+}
+
 function buildAudioPlayer(track){
  const player=$("spotify-player-container");
  player.innerHTML=`<div class="atlas-audio-player" role="group" aria-label="Odtwarzacz: ${track.title}">
-  <audio id="atlas-audio" preload="metadata" playsinline></audio>
-  <button id="audio-toggle" class="audio-toggle" type="button" aria-label="Odtwórz">▶</button>
+  <audio id="atlas-audio" preload="metadata" playsinline src="${track.audio}"></audio>
+  <button id="audio-toggle" class="audio-toggle" type="button" aria-label="Wstrzymaj">Ⅱ</button>
   <div class="audio-progress-wrap">
    <input id="audio-progress" class="audio-progress" type="range" min="0" max="100" value="0" step="0.1" aria-label="Przewiń utwór">
    <div class="audio-time"><span id="audio-current">0:00</span><span id="audio-duration">–:––</span></div>
@@ -85,24 +97,37 @@ function buildAudioPlayer(track){
 
  const audio=$("atlas-audio"),toggle=$("audio-toggle"),progress=$("audio-progress"),
        current=$("audio-current"),duration=$("audio-duration"),credit=$("audio-credit");
+ let seeking=false;
 
- audio.src=track.audio;
- audio.load();
-
- const revealCredit=()=>{if(credit&&audio.currentTime>=4){credit.classList.add("audio-credit-visible");credit.setAttribute("aria-hidden","false")}};
+ const revealCredit=()=>{
+   if(credit&&audio.currentTime>=4){
+     credit.classList.add("audio-credit-visible");
+     credit.setAttribute("aria-hidden","false");
+   }
+ };
  const sync=()=>{
    const total=Number.isFinite(audio.duration)?audio.duration:0;
    const now=Number.isFinite(audio.currentTime)?audio.currentTime:0;
-   if(!progress.matches(":active"))progress.value=total?String(now/total*100):"0";
-   current.textContent=formatAudioTime(now);
+   if(!seeking)progress.value=total?String(now/total*100):"0";
+   if(!seeking)current.textContent=formatAudioTime(now);
    duration.textContent=total?formatAudioTime(total):"–:––";
    revealCredit();
  };
+ const seekNow=()=>{
+   if(Number.isFinite(audio.duration)&&audio.duration>0){
+     const target=audio.duration*Number(progress.value)/100;
+     try{audio.currentTime=target}catch(e){}
+     current.textContent=formatAudioTime(target);
+   }
+ };
+ const beginSeek=()=>{seeking=true};
+ const endSeek=()=>{seekNow();seeking=false;requestAnimationFrame(sync)};
+
  audio.addEventListener("loadedmetadata",sync);
  audio.addEventListener("durationchange",sync);
  audio.addEventListener("timeupdate",sync);
  audio.addEventListener("play",()=>{toggle.textContent="Ⅱ";toggle.setAttribute("aria-label","Wstrzymaj")});
- audio.addEventListener("pause",()=>{if(audio.readyState){toggle.textContent="▶";toggle.setAttribute("aria-label","Odtwórz")}});
+ audio.addEventListener("pause",()=>{toggle.textContent="▶";toggle.setAttribute("aria-label","Odtwórz")});
  audio.addEventListener("ended",()=>{audio.currentTime=0;sync()});
 
  toggle.addEventListener("click",()=>{
@@ -110,15 +135,14 @@ function buildAudioPlayer(track){
    else audio.pause();
  });
 
- const seek=()=>{
-   if(Number.isFinite(audio.duration)&&audio.duration>0){
-     const target=audio.duration*Number(progress.value)/100;
-     try{audio.currentTime=target}catch(e){}
-     current.textContent=formatAudioTime(target);
-   }
- };
- progress.addEventListener("input",seek);
- progress.addEventListener("change",seek);
+ progress.addEventListener("pointerdown",beginSeek);
+ progress.addEventListener("touchstart",beginSeek,{passive:true});
+ progress.addEventListener("mousedown",beginSeek);
+ progress.addEventListener("input",()=>{seeking=true;seekNow()});
+ progress.addEventListener("change",endSeek);
+ progress.addEventListener("pointerup",endSeek);
+ progress.addEventListener("touchend",endSeek,{passive:true});
+ progress.addEventListener("mouseup",endSeek);
 
  const p=audio.play();
  if(p&&typeof p.catch==="function")p.catch(()=>{});
@@ -176,13 +200,40 @@ $("open-image-tiles").onclick=()=>{setTiles("image-tiles",images,"image");go("im
  if(currentImage.video){
   stopSpotify();
   const video=$("image-video");
+  const original=currentImage.video;
   video.pause();
-  video.src=currentImage.video;
-  video.preload="metadata";
-  video.load();
+  video.preload="auto";
   go("video-screen",0);
-  const p=video.play();
-  if(p&&typeof p.catch==="function")p.catch(()=>{});
+
+  const startWith=src=>{
+   video.src=src;
+   video.load();
+   const p=video.play();
+   if(p&&typeof p.catch==="function")p.catch(()=>{});
+  };
+
+  const cached=atlasVideoBlobCache.get(original);
+  if(cached){
+   cached.then(blobUrl=>startWith(blobUrl||original));
+  }else{
+   startWith(original);
+   atlasPrefetchVideo(original).then(blobUrl=>{
+    if(!blobUrl || !video.src || !video.src.includes(original))return;
+    const at=Number.isFinite(video.currentTime)?video.currentTime:0;
+    const wasPlaying=!video.paused;
+    video.src=blobUrl;
+    video.load();
+    const restore=()=>{
+     try{video.currentTime=at}catch(e){}
+     if(wasPlaying){
+      const q=video.play();
+      if(q&&typeof q.catch==="function")q.catch(()=>{});
+     }
+    };
+    if(video.readyState>=1)restore();
+    else video.addEventListener("loadedmetadata",restore,{once:true});
+   });
+  }
  }else{
   openGallery(currentImage.media,"image-detail-screen");
  }
