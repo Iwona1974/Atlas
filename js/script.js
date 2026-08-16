@@ -22,7 +22,14 @@ function typed(el,a,done,d=65,p=220){el.innerHTML="";let t=0;a.forEach(x=>{const
 function revealTiles(sel){document.querySelectorAll(sel).forEach((x,i)=>setTimeout(()=>x.classList.add("sense-tile-visible"),i*280))}
 function saveUnlock(i){if(i>unlocked){unlocked=i;try{sessionStorage.setItem(STORAGE,String(unlocked))}catch(e){}}renderWorlds()}
 function renderWorlds(){document.querySelectorAll(".world").forEach((b,i)=>{b.className="world world-visible";if(atlasComplete){b.disabled=false;b.setAttribute("aria-current","false");b.classList.add("world-open");return}b.disabled=i>unlocked;b.setAttribute("aria-current",i===unlocked?"step":"false");if(i===unlocked)b.classList.add("world-next");else if(i<unlocked)b.classList.add("world-completed");else b.classList.add("world-locked")})}
-function login(){const v=$("entry-password").value.trim();if(v!==PASS.entry){$("login-message").textContent="To jeszcze nie ten klucz.";$("login-message").classList.add("message-visible");$("entry-password").value="";return}unlocked=0;atlasComplete=false;try{sessionStorage.removeItem(STORAGE);sessionStorage.removeItem(COMPLETE_STORAGE)}catch(e){}renderWorlds();go("welcome-screen",700);setTimeout(()=>typed($("welcome-text"),WELCOME,()=>$("continue-to-atlas").classList.add("visible-control"),42,150),1000)}
+function login(){const v=$("entry-password").value.trim();if(v!==PASS.entry){$("login-message").textContent="To jeszcze nie ten klucz.";$("login-message").classList.add("message-visible");$("entry-password").value="";return}unlocked=0;atlasComplete=false;try{sessionStorage.removeItem(STORAGE);sessionStorage.removeItem(COMPLETE_STORAGE)}catch(e){}renderWorlds();
+setTimeout(()=>{
+ try{
+  if(images.przyciaganie&&images.przyciaganie.video)atlasLoadBlobUrl(images.przyciaganie.video).catch(()=>{});
+  if(images.pragnienie&&images.pragnienie.video)atlasLoadBlobUrl(images.pragnienie.video).catch(()=>{});
+ }catch(e){}
+},300);
+go("welcome-screen",700);setTimeout(()=>typed($("welcome-text"),WELCOME,()=>$("continue-to-atlas").classList.add("visible-control"),42,150),1000)}
 function intro(screen,textId,text,buttonId){go(screen);setTimeout(()=>typed($(textId),text,()=>$(buttonId).classList.add("visible-control"),75,340),1100)}
 function setTiles(container,data,attr){const c=$(container);c.innerHTML=Object.entries(data).map(([k,v])=>`<button class="sense-tile" data-${attr}="${k}">${v.title}</button>`).join("");revealTiles(`#${container} .sense-tile`)}
 function openWorld(i){if(i>unlocked)return;if(i===0)intro("sound-intro-screen","sound-intro-text",SOUND_INTRO,"open-sound-tiles");if(i===1)intro("image-intro-screen","image-intro-text",IMAGE_INTRO,"open-image-tiles");if(i===2)intro("taste-intro-screen","taste-intro-text",TASTE_INTRO,"open-taste-tiles");if(i===3)intro("smell-intro-screen","smell-intro-text",SMELL_INTRO,"open-smell-tiles");if(i===4)openTouch()}
@@ -68,10 +75,10 @@ function atlasPauseMedia(){
 function buildAudioPlayer(track){
  const player=$("spotify-player-container");
  player.innerHTML=`<div class="atlas-audio-player" role="group" aria-label="Odtwarzacz: ${track.title}">
-  <audio id="atlas-audio" preload="auto" playsinline src="${track.audio}"></audio>
-  <button id="audio-toggle" class="audio-toggle" type="button" aria-label="Wstrzymaj">Ⅱ</button>
+  <audio id="atlas-audio" preload="auto" playsinline></audio>
+  <button id="audio-toggle" class="audio-toggle" type="button" aria-label="Ładowanie">…</button>
   <div class="audio-progress-wrap">
-   <input id="audio-progress" class="audio-progress" type="range" min="0" max="100" value="0" step="0.1" aria-label="Przewiń utwór">
+   <input id="audio-progress" class="audio-progress" type="range" min="0" max="100" value="0" step="0.1" aria-label="Przewiń utwór" disabled>
    <div class="audio-time"><span id="audio-current">0:00</span><span id="audio-duration">–:––</span></div>
   </div>
  </div>
@@ -81,50 +88,63 @@ function buildAudioPlayer(track){
  </div>`;
  player.classList.remove("hidden-player");
  $("show-spotify-player").style.display="none";
-
  const audio=$("atlas-audio"),toggle=$("audio-toggle"),progress=$("audio-progress"),
        current=$("audio-current"),duration=$("audio-duration"),credit=$("audio-credit");
 
- const revealCredit=()=>{
-  if(credit&&audio.currentTime>=4){
-   credit.classList.add("audio-credit-visible");
-   credit.setAttribute("aria-hidden","false");
-  }
- };
+ const revealCredit=()=>{if(credit&&audio.currentTime>=4){credit.classList.add("audio-credit-visible");credit.setAttribute("aria-hidden","false")}};
  const sync=()=>{
-  const total=Number.isFinite(audio.duration)?audio.duration:0;
-  const now=Number.isFinite(audio.currentTime)?audio.currentTime:0;
-  progress.value=total?String(now/total*100):"0";
-  current.textContent=formatAudioTime(now);
-  duration.textContent=total?formatAudioTime(total):"–:––";
-  revealCredit();
+   const total=Number.isFinite(audio.duration)?audio.duration:0;
+   const now=Number.isFinite(audio.currentTime)?audio.currentTime:0;
+   if(!progress.matches(":active"))progress.value=total?String(now/total*100):"0";
+   current.textContent=formatAudioTime(now);
+   duration.textContent=total?formatAudioTime(total):"–:––";
+   revealCredit();
  };
-
  audio.addEventListener("loadedmetadata",sync);
  audio.addEventListener("durationchange",sync);
  audio.addEventListener("timeupdate",sync);
  audio.addEventListener("play",()=>{toggle.textContent="Ⅱ";toggle.setAttribute("aria-label","Wstrzymaj")});
- audio.addEventListener("pause",()=>{toggle.textContent="▶";toggle.setAttribute("aria-label","Odtwórz")});
+ audio.addEventListener("pause",()=>{if(audio.readyState){toggle.textContent="▶";toggle.setAttribute("aria-label","Odtwórz")}});
  audio.addEventListener("ended",()=>{audio.currentTime=0;sync()});
 
  toggle.addEventListener("click",()=>{
-  if(audio.paused){
-   const p=audio.play(); if(p&&typeof p.catch==="function")p.catch(()=>{});
-  }else audio.pause();
+   if(!audio.src)return;
+   if(audio.paused){const p=audio.play();if(p&&typeof p.catch==="function")p.catch(()=>{});}
+   else audio.pause();
  });
-
  const seek=()=>{
-  if(Number.isFinite(audio.duration)&&audio.duration>0){
-   const target=audio.duration*Number(progress.value)/100;
-   try{audio.currentTime=target}catch(e){}
-   current.textContent=formatAudioTime(target);
-  }
+   if(Number.isFinite(audio.duration)&&audio.duration>0){
+     const target=audio.duration*Number(progress.value)/100;
+     try{audio.currentTime=target}catch(e){}
+     current.textContent=formatAudioTime(target);
+   }
  };
  progress.addEventListener("input",seek);
  progress.addEventListener("change",seek);
 
- const first=audio.play();
- if(first&&typeof first.catch==="function")first.catch(()=>{});
+ // Najpierw pobieramy cały plik do pamięci telefonu.
+ // Dopiero potem uruchamiamy odtwarzacz, dzięki czemu przewijanie działa od pierwszego wejścia.
+ atlasLoadBlobUrl(track.audio).then(blobUrl=>{
+   if(!$("atlas-audio")||$("atlas-audio")!==audio)return;
+   audio.src=blobUrl;
+   audio.load();
+   progress.disabled=false;
+   toggle.textContent="▶";
+   toggle.setAttribute("aria-label","Odtwórz");
+   const start=()=>{
+     sync();
+     const p=audio.play();
+     if(p&&typeof p.catch==="function")p.catch(()=>{});
+   };
+   if(audio.readyState>=1)start();else audio.addEventListener("loadedmetadata",start,{once:true});
+ }).catch(()=>{
+   // awaryjnie zwykły adres
+   audio.src=track.audio;
+   audio.load();
+   progress.disabled=false;
+   toggle.textContent="▶";
+   toggle.setAttribute("aria-label","Odtwórz");
+ });
 }
 function setPanelState(panelId,open,instant=false){
  const panel=$(panelId);if(!panel)return;
