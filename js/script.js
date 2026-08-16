@@ -78,13 +78,25 @@ function atlasPrefetchVideo(src){
  return promise;
 }
 
+
+const atlasAudioBlobCache=new Map();
+function atlasPrefetchAudio(src){
+ if(atlasAudioBlobCache.has(src))return atlasAudioBlobCache.get(src);
+ const promise=fetch(src,{cache:"no-store"})
+  .then(r=>{if(!r.ok)throw new Error("audio");return r.blob()})
+  .then(blob=>URL.createObjectURL(blob))
+  .catch(()=>null);
+ atlasAudioBlobCache.set(src,promise);
+ return promise;
+}
+
 function buildAudioPlayer(track){
  const player=$("spotify-player-container");
  player.innerHTML=`<div class="atlas-audio-player" role="group" aria-label="Odtwarzacz: ${track.title}">
-  <audio id="atlas-audio" preload="metadata" playsinline src="${track.audio}"></audio>
-  <button id="audio-toggle" class="audio-toggle" type="button" aria-label="Wstrzymaj">Ⅱ</button>
+  <audio id="atlas-audio" preload="metadata" playsinline></audio>
+  <button id="audio-toggle" class="audio-toggle" type="button" aria-label="Ładowanie">…</button>
   <div class="audio-progress-wrap">
-   <input id="audio-progress" class="audio-progress" type="range" min="0" max="100" value="0" step="0.1" aria-label="Przewiń utwór">
+   <input id="audio-progress" class="audio-progress" type="range" min="0" max="100" value="0" step="0.1" aria-label="Przewiń utwór" disabled>
    <div class="audio-time"><span id="audio-current">0:00</span><span id="audio-duration">–:––</span></div>
   </div>
  </div>
@@ -127,10 +139,11 @@ function buildAudioPlayer(track){
  audio.addEventListener("durationchange",sync);
  audio.addEventListener("timeupdate",sync);
  audio.addEventListener("play",()=>{toggle.textContent="Ⅱ";toggle.setAttribute("aria-label","Wstrzymaj")});
- audio.addEventListener("pause",()=>{toggle.textContent="▶";toggle.setAttribute("aria-label","Odtwórz")});
+ audio.addEventListener("pause",()=>{if(audio.src){toggle.textContent="▶";toggle.setAttribute("aria-label","Odtwórz")}});
  audio.addEventListener("ended",()=>{audio.currentTime=0;sync()});
 
  toggle.addEventListener("click",()=>{
+   if(!audio.src)return;
    if(audio.paused){const p=audio.play();if(p&&typeof p.catch==="function")p.catch(()=>{});}
    else audio.pause();
  });
@@ -144,8 +157,21 @@ function buildAudioPlayer(track){
  progress.addEventListener("touchend",endSeek,{passive:true});
  progress.addEventListener("mouseup",endSeek);
 
- const p=audio.play();
- if(p&&typeof p.catch==="function")p.catch(()=>{});
+ atlasPrefetchAudio(track.audio).then(blobUrl=>{
+   if(!$("atlas-audio")||$("atlas-audio")!==audio)return;
+   audio.src=blobUrl||track.audio;
+   audio.load();
+   progress.disabled=false;
+   toggle.textContent="▶";
+   toggle.setAttribute("aria-label","Odtwórz");
+   const start=()=>{
+     sync();
+     const p=audio.play();
+     if(p&&typeof p.catch==="function")p.catch(()=>{});
+   };
+   if(audio.readyState>=1)start();
+   else audio.addEventListener("loadedmetadata",start,{once:true});
+ });
 }
 function setPanelState(panelId,open,instant=false){
  const panel=$(panelId);if(!panel)return;
@@ -195,8 +221,8 @@ const SCREEN_PARENT={
 function parentForCurrent(){const id=currentScreen&&currentScreen.id;if(id==="gallery-screen")return $("close-gallery").dataset.return||"worlds-screen";return SCREEN_PARENT[id]||null}
 window.addEventListener("popstate",()=>{const parent=parentForCurrent();if(!parent)return;stopActiveMedia();showScreen(parent,0);try{history.pushState({atlas:true,screen:parent},"",location.href)}catch(e){}});
 $("enter-button").onclick=login;$("entry-password").onkeydown=e=>{if(e.key==="Enter")login()};$("continue-to-atlas").onclick=()=>{go("title-screen");setTimeout(()=>$("atlas-title").classList.add("atlas-title-visible"),900)};$("atlas-title").onclick=()=>{renderWorlds();go("worlds-screen")};document.querySelectorAll(".world").forEach((b,i)=>b.onclick=()=>openWorld(i));
-$("open-sound-tiles").onclick=()=>{setTiles("sound-tiles",sounds,"sound");go("sound-tiles-screen")};$("sound-tiles").onclick=e=>{const b=e.target.closest("[data-sound]");if(!b)return;currentSound=sounds[b.dataset.sound];$("sound-detail-title").textContent=currentSound.title;$("sound-detail-description").innerHTML=para(currentSound.p);stopSpotify();go("sound-detail-screen")};$("show-spotify-player").onclick=()=>{if(currentSound)buildAudioPlayer(currentSound)};$("back-to-sound-tiles").onclick=()=>{stopSpotify();go("sound-tiles-screen")};$("finish-sound-world").onclick=()=>go("sound-ending-screen");$("back-from-sound-ending").onclick=()=>go("sound-tiles-screen");$("sound-key-button").onclick=()=>checkKey("sound-key-input","sound-key-message",PASS.sound,1);$("sound-key-input").onkeydown=e=>{if(e.key==="Enter")$("sound-key-button").click()};
-$("open-image-tiles").onclick=()=>{setTiles("image-tiles",images,"image");go("image-tiles-screen")};$("image-tiles").onclick=e=>{const b=e.target.closest("[data-image]");if(!b)return;currentImage=images[b.dataset.image];$("image-detail-title").textContent=currentImage.title;$("image-main-text").innerHTML=para(currentImage.main);$("image-why-text").innerHTML=para(currentImage.why);setPanelState("image-why-text",false,true);$("toggle-image-why").textContent=currentImage.whyLabel||"Dlaczego zachwyca…";go("image-detail-screen")};$("toggle-image-why").onclick=()=>togglePanel("image-why-text");$("show-image-gallery").onclick=()=>{
+$("open-sound-tiles").onclick=()=>{setTiles("sound-tiles",sounds,"sound");go("sound-tiles-screen")};$("sound-tiles").onclick=e=>{const b=e.target.closest("[data-sound]");if(!b)return;currentSound=sounds[b.dataset.sound];atlasPrefetchAudio(currentSound.audio);$("sound-detail-title").textContent=currentSound.title;$("sound-detail-description").innerHTML=para(currentSound.p);stopSpotify();go("sound-detail-screen")};$("show-spotify-player").onclick=()=>{if(currentSound)buildAudioPlayer(currentSound)};$("back-to-sound-tiles").onclick=()=>{stopSpotify();go("sound-tiles-screen")};$("finish-sound-world").onclick=()=>go("sound-ending-screen");$("back-from-sound-ending").onclick=()=>go("sound-tiles-screen");$("sound-key-button").onclick=()=>checkKey("sound-key-input","sound-key-message",PASS.sound,1);$("sound-key-input").onkeydown=e=>{if(e.key==="Enter")$("sound-key-button").click()};
+$("open-image-tiles").onclick=()=>{setTiles("image-tiles",images,"image");go("image-tiles-screen")};$("image-tiles").onclick=e=>{const b=e.target.closest("[data-image]");if(!b)return;currentImage=images[b.dataset.image];if(currentImage.video)atlasPrefetchVideo(currentImage.video);$("image-detail-title").textContent=currentImage.title;$("image-main-text").innerHTML=para(currentImage.main);$("image-why-text").innerHTML=para(currentImage.why);setPanelState("image-why-text",false,true);$("toggle-image-why").textContent=currentImage.whyLabel||"Dlaczego zachwyca…";go("image-detail-screen")};$("toggle-image-why").onclick=()=>togglePanel("image-why-text");$("show-image-gallery").onclick=()=>{
  if(currentImage.video){
   stopSpotify();
   const video=$("image-video");
