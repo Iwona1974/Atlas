@@ -67,38 +67,64 @@ function atlasPauseMedia(){
 
 function buildAudioPlayer(track){
  const player=$("spotify-player-container");
- player.innerHTML=`<div class="atlas-native-audio-wrap">
-  <audio id="atlas-audio" class="atlas-native-audio" controls playsinline preload="auto" src="${track.audio}">Twoja przeglądarka nie obsługuje odtwarzania audio.</audio>
+ player.innerHTML=`<div class="atlas-audio-player" role="group" aria-label="Odtwarzacz: ${track.title}">
+  <audio id="atlas-audio" preload="auto" playsinline src="${track.audio}"></audio>
+  <button id="audio-toggle" class="audio-toggle" type="button" aria-label="Wstrzymaj">Ⅱ</button>
+  <div class="audio-progress-wrap">
+   <input id="audio-progress" class="audio-progress" type="range" min="0" max="100" value="0" step="0.1" aria-label="Przewiń utwór">
+   <div class="audio-time"><span id="audio-current">0:00</span><span id="audio-duration">–:––</span></div>
+  </div>
  </div>
- <div id="audio-credit" class="audio-credit audio-credit-visible" aria-live="polite" aria-hidden="false">
+ <div id="audio-credit" class="audio-credit" aria-live="polite" aria-hidden="true">
   <span class="audio-credit-title">${track.trackTitle}</span>
   <span class="audio-credit-artist">${track.artist}</span>
  </div>`;
  player.classList.remove("hidden-player");
  $("show-spotify-player").style.display="none";
- const audio=$("atlas-audio");
 
- // Start od razu po kliknięciu „Posłuchaj”.
- const firstPlay=audio.play();
- if(firstPlay&&typeof firstPlay.catch==="function")firstPlay.catch(()=>{});
+ const audio=$("atlas-audio"),toggle=$("audio-toggle"),progress=$("audio-progress"),
+       current=$("audio-current"),duration=$("audio-duration"),credit=$("audio-credit");
 
- // Równolegle pobierz cały utwór i przełącz na lokalny Blob,
- // żeby suwak działał stabilnie na Androidzie i iOS.
- atlasLoadBlobUrl(track.audio).then(blobUrl=>{
-  if(!$("atlas-audio")||$("atlas-audio")!==audio)return;
-  const wasPlaying=!audio.paused;
-  const at=Number.isFinite(audio.currentTime)?audio.currentTime:0;
-  audio.src=blobUrl;
-  audio.load();
-  const restore=()=>{
-   try{if(Number.isFinite(audio.duration)&&audio.duration>0)audio.currentTime=Math.min(at,Math.max(0,audio.duration-.05))}catch(e){}
-   if(wasPlaying){
-    const p=audio.play();
-    if(p&&typeof p.catch==="function")p.catch(()=>{});
-   }
-  };
-  if(audio.readyState>=1)restore();else audio.addEventListener("loadedmetadata",restore,{once:true});
- }).catch(()=>{});
+ const revealCredit=()=>{
+  if(credit&&audio.currentTime>=4){
+   credit.classList.add("audio-credit-visible");
+   credit.setAttribute("aria-hidden","false");
+  }
+ };
+ const sync=()=>{
+  const total=Number.isFinite(audio.duration)?audio.duration:0;
+  const now=Number.isFinite(audio.currentTime)?audio.currentTime:0;
+  progress.value=total?String(now/total*100):"0";
+  current.textContent=formatAudioTime(now);
+  duration.textContent=total?formatAudioTime(total):"–:––";
+  revealCredit();
+ };
+
+ audio.addEventListener("loadedmetadata",sync);
+ audio.addEventListener("durationchange",sync);
+ audio.addEventListener("timeupdate",sync);
+ audio.addEventListener("play",()=>{toggle.textContent="Ⅱ";toggle.setAttribute("aria-label","Wstrzymaj")});
+ audio.addEventListener("pause",()=>{toggle.textContent="▶";toggle.setAttribute("aria-label","Odtwórz")});
+ audio.addEventListener("ended",()=>{audio.currentTime=0;sync()});
+
+ toggle.addEventListener("click",()=>{
+  if(audio.paused){
+   const p=audio.play(); if(p&&typeof p.catch==="function")p.catch(()=>{});
+  }else audio.pause();
+ });
+
+ const seek=()=>{
+  if(Number.isFinite(audio.duration)&&audio.duration>0){
+   const target=audio.duration*Number(progress.value)/100;
+   try{audio.currentTime=target}catch(e){}
+   current.textContent=formatAudioTime(target);
+  }
+ };
+ progress.addEventListener("input",seek);
+ progress.addEventListener("change",seek);
+
+ const first=audio.play();
+ if(first&&typeof first.catch==="function")first.catch(()=>{});
 }
 function setPanelState(panelId,open,instant=false){
  const panel=$(panelId);if(!panel)return;
