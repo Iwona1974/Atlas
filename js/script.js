@@ -43,37 +43,17 @@ function stopSpotify(){
 }
 function buildAudioPlayer(track){
  const player=$("spotify-player-container");
- player.innerHTML=`<div class="atlas-audio-player" role="group" aria-label="Odtwarzacz: ${track.title}">
-  <audio id="atlas-audio" preload="metadata" src="${track.audio}"></audio>
-  <button id="audio-toggle" class="audio-toggle" type="button" aria-label="Wstrzymaj">Ⅱ</button>
-  <div class="audio-progress-wrap">
-   <input id="audio-progress" class="audio-progress" type="range" min="0" max="100" value="0" step="0.1" aria-label="Przewiń utwór">
-   <div class="audio-time"><span id="audio-current">0:00</span><span id="audio-duration">–:––</span></div>
-  </div>
+ player.innerHTML=`<div class="atlas-native-audio-wrap">
+  <audio id="atlas-audio" class="atlas-native-audio" controls playsinline preload="metadata" src="${track.audio}">Twoja przeglądarka nie obsługuje odtwarzania audio.</audio>
  </div>
- <div id="audio-credit" class="audio-credit" aria-live="polite" aria-hidden="true">
+ <div id="audio-credit" class="audio-credit audio-credit-visible" aria-live="polite" aria-hidden="false">
   <span class="audio-credit-title">${track.trackTitle}</span>
   <span class="audio-credit-artist">${track.artist}</span>
  </div>`;
  player.classList.remove("hidden-player");$("show-spotify-player").style.display="none";
- const audio=$("atlas-audio"),toggle=$("audio-toggle"),progress=$("audio-progress"),current=$("audio-current"),duration=$("audio-duration"),credit=$("audio-credit");
- const revealCredit=()=>{if(credit&&audio.currentTime>=4){credit.classList.add("audio-credit-visible");credit.setAttribute("aria-hidden","false")}};
- const sync=()=>{const total=Number.isFinite(audio.duration)?audio.duration:0;const now=Number.isFinite(audio.currentTime)?audio.currentTime:0;progress.value=total?String(now/total*100):"0";current.textContent=formatAudioTime(now);duration.textContent=total?formatAudioTime(total):"–:––";revealCredit()};
- audio.addEventListener("loadedmetadata",sync);audio.addEventListener("durationchange",sync);audio.addEventListener("timeupdate",sync);
- audio.addEventListener("play",()=>{toggle.textContent="Ⅱ";toggle.setAttribute("aria-label","Wstrzymaj")});
- audio.addEventListener("pause",()=>{toggle.textContent="▶";toggle.setAttribute("aria-label","Odtwórz")});
- audio.addEventListener("ended",()=>{audio.currentTime=0;sync()});
- toggle.addEventListener("click",()=>{if(audio.paused)audio.play().catch(()=>{});else audio.pause()});
- const seekToPercent=pct=>{if(!Number.isFinite(audio.duration)||audio.duration<=0)return;const v=Math.max(0,Math.min(100,pct));progress.value=String(v);const target=audio.duration*v/100;try{audio.currentTime=target}catch(e){}current.textContent=formatAudioTime(target)};
- const seekFromClientX=x=>{const r=progress.getBoundingClientRect();if(!r.width)return;seekToPercent((x-r.left)/r.width*100)};
- progress.addEventListener("input",()=>seekToPercent(Number(progress.value)));
- progress.addEventListener("change",()=>seekToPercent(Number(progress.value)));
- progress.addEventListener("pointerdown",e=>{seekFromClientX(e.clientX);try{progress.setPointerCapture(e.pointerId)}catch(_){}});
- progress.addEventListener("pointermove",e=>{if(e.buttons||progress.hasPointerCapture?.(e.pointerId))seekFromClientX(e.clientX)});
- progress.addEventListener("touchstart",e=>{if(e.touches[0]){e.preventDefault();seekFromClientX(e.touches[0].clientX)}},{passive:false});
- progress.addEventListener("touchmove",e=>{if(e.touches[0]){e.preventDefault();seekFromClientX(e.touches[0].clientX)}},{passive:false});
- progress.addEventListener("touchend",e=>{e.preventDefault()},{passive:false});
- audio.play().catch(()=>{toggle.textContent="▶";toggle.setAttribute("aria-label","Odtwórz")});
+ const audio=$("atlas-audio");
+ // Odtwarzanie uruchamia się wyłącznie po geście użytkownika — zgodnie z Android/iOS.
+ audio.load();
 }
 function setPanelState(panelId,open,instant=false){
  const panel=$(panelId);if(!panel)return;
