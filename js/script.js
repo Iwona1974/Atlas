@@ -41,19 +41,64 @@ function stopSpotify(){
  if(player){player.innerHTML="";player.classList.add("hidden-player")}
  const button=$("show-spotify-player");if(button)button.style.display="block"
 }
+
+const atlasBlobCache=new Map();
+const atlasObjectUrls=new Set();
+
+function atlasLoadBlobUrl(src){
+ if(atlasBlobCache.has(src))return atlasBlobCache.get(src);
+ const promise=fetch(src,{cache:"no-store"})
+  .then(r=>{if(!r.ok)throw new Error("media");return r.blob()})
+  .then(blob=>{
+   const url=URL.createObjectURL(blob);
+   atlasObjectUrls.add(url);
+   return url;
+  });
+ atlasBlobCache.set(src,promise);
+ return promise;
+}
+
+function atlasPauseMedia(){
+ const audio=$("atlas-audio");
+ if(audio&&!audio.paused)audio.pause();
+ const video=$("image-video");
+ if(video&&!video.paused)video.pause();
+}
+
 function buildAudioPlayer(track){
  const player=$("spotify-player-container");
  player.innerHTML=`<div class="atlas-native-audio-wrap">
-  <audio id="atlas-audio" class="atlas-native-audio" controls playsinline preload="metadata" src="${track.audio}">Twoja przeglądarka nie obsługuje odtwarzania audio.</audio>
+  <audio id="atlas-audio" class="atlas-native-audio" controls playsinline preload="auto" src="${track.audio}">Twoja przeglądarka nie obsługuje odtwarzania audio.</audio>
  </div>
  <div id="audio-credit" class="audio-credit audio-credit-visible" aria-live="polite" aria-hidden="false">
   <span class="audio-credit-title">${track.trackTitle}</span>
   <span class="audio-credit-artist">${track.artist}</span>
  </div>`;
- player.classList.remove("hidden-player");$("show-spotify-player").style.display="none";
+ player.classList.remove("hidden-player");
+ $("show-spotify-player").style.display="none";
  const audio=$("atlas-audio");
- // Odtwarzanie uruchamia się wyłącznie po geście użytkownika — zgodnie z Android/iOS.
- audio.load();
+
+ // Start od razu po kliknięciu „Posłuchaj”.
+ const firstPlay=audio.play();
+ if(firstPlay&&typeof firstPlay.catch==="function")firstPlay.catch(()=>{});
+
+ // Równolegle pobierz cały utwór i przełącz na lokalny Blob,
+ // żeby suwak działał stabilnie na Androidzie i iOS.
+ atlasLoadBlobUrl(track.audio).then(blobUrl=>{
+  if(!$("atlas-audio")||$("atlas-audio")!==audio)return;
+  const wasPlaying=!audio.paused;
+  const at=Number.isFinite(audio.currentTime)?audio.currentTime:0;
+  audio.src=blobUrl;
+  audio.load();
+  const restore=()=>{
+   try{if(Number.isFinite(audio.duration)&&audio.duration>0)audio.currentTime=Math.min(at,Math.max(0,audio.duration-.05))}catch(e){}
+   if(wasPlaying){
+    const p=audio.play();
+    if(p&&typeof p.catch==="function")p.catch(()=>{});
+   }
+  };
+  if(audio.readyState>=1)restore();else audio.addEventListener("loadedmetadata",restore,{once:true});
+ }).catch(()=>{});
 }
 function setPanelState(panelId,open,instant=false){
  const panel=$(panelId);if(!panel)return;
@@ -104,7 +149,38 @@ function parentForCurrent(){const id=currentScreen&&currentScreen.id;if(id==="ga
 window.addEventListener("popstate",()=>{const parent=parentForCurrent();if(!parent)return;stopActiveMedia();showScreen(parent,0);try{history.pushState({atlas:true,screen:parent},"",location.href)}catch(e){}});
 $("enter-button").onclick=login;$("entry-password").onkeydown=e=>{if(e.key==="Enter")login()};$("continue-to-atlas").onclick=()=>{go("title-screen");setTimeout(()=>$("atlas-title").classList.add("atlas-title-visible"),900)};$("atlas-title").onclick=()=>{renderWorlds();go("worlds-screen")};document.querySelectorAll(".world").forEach((b,i)=>b.onclick=()=>openWorld(i));
 $("open-sound-tiles").onclick=()=>{setTiles("sound-tiles",sounds,"sound");go("sound-tiles-screen")};$("sound-tiles").onclick=e=>{const b=e.target.closest("[data-sound]");if(!b)return;currentSound=sounds[b.dataset.sound];$("sound-detail-title").textContent=currentSound.title;$("sound-detail-description").innerHTML=para(currentSound.p);stopSpotify();go("sound-detail-screen")};$("show-spotify-player").onclick=()=>{if(currentSound)buildAudioPlayer(currentSound)};$("back-to-sound-tiles").onclick=()=>{stopSpotify();go("sound-tiles-screen")};$("finish-sound-world").onclick=()=>go("sound-ending-screen");$("back-from-sound-ending").onclick=()=>go("sound-tiles-screen");$("sound-key-button").onclick=()=>checkKey("sound-key-input","sound-key-message",PASS.sound,1);$("sound-key-input").onkeydown=e=>{if(e.key==="Enter")$("sound-key-button").click()};
-$("open-image-tiles").onclick=()=>{setTiles("image-tiles",images,"image");go("image-tiles-screen")};$("image-tiles").onclick=e=>{const b=e.target.closest("[data-image]");if(!b)return;currentImage=images[b.dataset.image];$("image-detail-title").textContent=currentImage.title;$("image-main-text").innerHTML=para(currentImage.main);$("image-why-text").innerHTML=para(currentImage.why);setPanelState("image-why-text",false,true);$("toggle-image-why").textContent=currentImage.whyLabel||"Dlaczego zachwyca…";go("image-detail-screen")};$("toggle-image-why").onclick=()=>togglePanel("image-why-text");$("show-image-gallery").onclick=()=>{if(currentImage.video){const video=$("image-video");stopSpotify();video.pause();video.src=currentImage.video;video.load();video.currentTime=0;go("video-screen",0);const start=video.play();if(start&&typeof start.catch==="function")start.catch(()=>{});}else openGallery(currentImage.media,"image-detail-screen")};$("back-to-image-tiles").onclick=()=>go("image-tiles-screen");$("finish-image-world").onclick=()=>go("image-ending-screen");$("back-from-image-ending").onclick=()=>go("image-tiles-screen");$("image-key-button").onclick=()=>checkKey("image-key-input","image-key-message",PASS.image,2);$("image-key-input").onkeydown=e=>{if(e.key==="Enter")$("image-key-button").click()};$("close-video").onclick=()=>{const video=$("image-video");video.pause();video.currentTime=0;video.removeAttribute("src");video.load();go("image-detail-screen")};
+$("open-image-tiles").onclick=()=>{setTiles("image-tiles",images,"image");go("image-tiles-screen")};$("image-tiles").onclick=e=>{const b=e.target.closest("[data-image]");if(!b)return;currentImage=images[b.dataset.image];$("image-detail-title").textContent=currentImage.title;$("image-main-text").innerHTML=para(currentImage.main);$("image-why-text").innerHTML=para(currentImage.why);setPanelState("image-why-text",false,true);$("toggle-image-why").textContent=currentImage.whyLabel||"Dlaczego zachwyca…";go("image-detail-screen")};$("toggle-image-why").onclick=()=>togglePanel("image-why-text");$("show-image-gallery").onclick=()=>{
+ if(currentImage.video){
+  const video=$("image-video");
+  stopSpotify();
+  video.pause();
+  video.src=currentImage.video;
+  video.preload="auto";
+  video.load();
+  go("video-screen",0);
+
+  const p=video.play();
+  if(p&&typeof p.catch==="function")p.catch(()=>{});
+
+  atlasLoadBlobUrl(currentImage.video).then(blobUrl=>{
+   if(currentScreen!==screens["video-screen"])return;
+   const wasPlaying=!video.paused;
+   const at=Number.isFinite(video.currentTime)?video.currentTime:0;
+   video.src=blobUrl;
+   video.load();
+   const restore=()=>{
+    try{if(Number.isFinite(video.duration)&&video.duration>0)video.currentTime=Math.min(at,Math.max(0,video.duration-.05))}catch(e){}
+    if(wasPlaying){
+     const q=video.play();
+     if(q&&typeof q.catch==="function")q.catch(()=>{});
+    }
+   };
+   if(video.readyState>=1)restore();else video.addEventListener("loadedmetadata",restore,{once:true});
+  }).catch(()=>{});
+ }else{
+  openGallery(currentImage.media,"image-detail-screen");
+ }
+};$("back-to-image-tiles").onclick=()=>go("image-tiles-screen");$("finish-image-world").onclick=()=>go("image-ending-screen");$("back-from-image-ending").onclick=()=>go("image-tiles-screen");$("image-key-button").onclick=()=>checkKey("image-key-input","image-key-message",PASS.image,2);$("image-key-input").onkeydown=e=>{if(e.key==="Enter")$("image-key-button").click()};$("close-video").onclick=()=>{const video=$("image-video");video.pause();video.currentTime=0;video.removeAttribute("src");video.load();go("image-detail-screen")};
 $("open-taste-tiles").onclick=()=>{setTiles("taste-tiles",tastes,"taste");go("taste-tiles-screen")};$("taste-tiles").onclick=e=>{const b=e.target.closest("[data-taste]");if(!b)return;currentTaste=tastes[b.dataset.taste];$("taste-detail-title").textContent=currentTaste.title;$("taste-main-text").innerHTML=para(currentTaste.intro);$("taste-story-text").innerHTML=para(currentTaste.story);$("taste-recipe").innerHTML=recipeHTML(currentTaste);setPanelState("taste-story-text",false,true);setPanelState("taste-recipe",false,true);$("taste-recipe").querySelectorAll("img").forEach(img=>img.addEventListener("load",()=>{if(!$("taste-recipe").classList.contains("collapsed"))$("taste-recipe").style.maxHeight=$("taste-recipe").scrollHeight+"px"}));go("taste-detail-screen")};$("toggle-taste-story").onclick=()=>togglePanel("taste-story-text");$("toggle-taste-recipe").onclick=()=>togglePanel("taste-recipe");$("back-to-taste-tiles").onclick=()=>go("taste-tiles-screen");$("finish-taste-world").onclick=()=>go("taste-ending-screen");$("back-from-taste-ending").onclick=()=>go("taste-tiles-screen");$("taste-key-button").onclick=()=>checkKey("taste-key-input","taste-key-message",PASS.taste,3);$("taste-key-input").onkeydown=e=>{if(e.key==="Enter")$("taste-key-button").click()};
 $("open-smell-tiles").onclick=()=>{setTiles("smell-tiles",smellSections,"smell");go("smell-tiles-screen")};$("smell-tiles").onclick=e=>{const b=e.target.closest("[data-smell]");if(!b)return;currentSmellSection=b.dataset.smell;const s=smellSections[currentSmellSection];$("smell-section-title").textContent=s.title;$("smell-section-text").innerHTML=para(s.text);$("smell-subtiles").innerHTML=s.places.map(k=>`<button class="subtile" data-place="${k}">${smellPlaces[k].title}</button>`).join("");go("smell-section-screen")};$("smell-subtiles").onclick=e=>{const b=e.target.closest("[data-place]");if(!b)return;currentSmellPlace=b.dataset.place;const p=smellPlaces[currentSmellPlace];$("smell-place-title").textContent=p.title;$("smell-place-text").innerHTML=para(p.text);go("smell-place-screen")};$("show-smell-gallery").onclick=()=>openGallery(smellPlaces[currentSmellPlace].media,"smell-place-screen");$("back-to-smell-section").onclick=()=>go("smell-section-screen");$("back-to-smell-tiles").onclick=()=>go("smell-tiles-screen");$("finish-smell-world").onclick=()=>go("smell-ending-screen");$("back-from-smell-ending").onclick=()=>go("smell-tiles-screen");$("smell-key-button").onclick=()=>checkKey("smell-key-input","smell-key-message",PASS.smell,4);$("smell-key-input").onkeydown=e=>{if(e.key==="Enter")$("smell-key-button").click()};
 $("close-gallery").onclick=()=>{clearTimeout(galleryTimer);go($("close-gallery").dataset.return)};$("return-to-atlas").onclick=()=>{saveUnlock(4);atlasComplete=true;try{sessionStorage.setItem(COMPLETE_STORAGE,"1")}catch(e){}renderWorlds();go("worlds-screen")};
@@ -130,3 +206,8 @@ document.addEventListener("keydown",e=>{
  else if(currentScreen===screens["video-screen"]){closeVideo()}
 });
 window.addEventListener("pagehide",()=>{clearTimeout(galleryTimer);stopSpotify();const video=$("image-video");video.pause()});
+
+document.addEventListener("visibilitychange",()=>{
+ if(document.hidden)atlasPauseMedia();
+});
+window.addEventListener("blur",()=>atlasPauseMedia());

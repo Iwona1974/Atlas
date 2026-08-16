@@ -1,5 +1,11 @@
-const CACHE='atlas-native-media-final';
-self.addEventListener('install',e=>self.skipWaiting());
-self.addEventListener('activate',e=>e.waitUntil(caches.keys().then(keys=>Promise.all(keys.map(k=>caches.delete(k)))).then(()=>self.clients.claim())));
-// Celowo bez obsługi fetch: audio i wideo trafiają bezpośrednio do serwera,
-// dzięki czemu przeglądarka może używać żądań Range potrzebnych do przewijania.
+const CACHE="atlas-phone-final-2";
+self.addEventListener("install",e=>e.waitUntil(self.skipWaiting()));
+self.addEventListener("activate",e=>e.waitUntil(
+ caches.keys().then(keys=>Promise.all(keys.map(k=>caches.delete(k)))).then(()=>self.clients.claim())
+));
+self.addEventListener("fetch",e=>{
+ if(e.request.method!=="GET")return;
+ const u=new URL(e.request.url);
+ if(u.pathname.includes("/assets/"))return;
+ e.respondWith(fetch(e.request,{cache:"no-store"}));
+});
