@@ -221,8 +221,21 @@ const SCREEN_PARENT={
 function parentForCurrent(){const id=currentScreen&&currentScreen.id;if(id==="gallery-screen")return $("close-gallery").dataset.return||"worlds-screen";return SCREEN_PARENT[id]||null}
 window.addEventListener("popstate",()=>{const parent=parentForCurrent();if(!parent)return;stopActiveMedia();showScreen(parent,0);try{history.pushState({atlas:true,screen:parent},"",location.href)}catch(e){}});
 $("enter-button").onclick=login;$("entry-password").onkeydown=e=>{if(e.key==="Enter")login()};$("continue-to-atlas").onclick=()=>{go("title-screen");setTimeout(()=>$("atlas-title").classList.add("atlas-title-visible"),900)};$("atlas-title").onclick=()=>{renderWorlds();go("worlds-screen")};document.querySelectorAll(".world").forEach((b,i)=>b.onclick=()=>openWorld(i));
-$("open-sound-tiles").onclick=()=>{setTiles("sound-tiles",sounds,"sound");go("sound-tiles-screen")};$("sound-tiles").onclick=e=>{const b=e.target.closest("[data-sound]");if(!b)return;currentSound=sounds[b.dataset.sound];atlasPrefetchAudio(currentSound.audio);$("sound-detail-title").textContent=currentSound.title;$("sound-detail-description").innerHTML=para(currentSound.p);stopSpotify();go("sound-detail-screen")};$("show-spotify-player").onclick=()=>{if(currentSound)buildAudioPlayer(currentSound)};$("back-to-sound-tiles").onclick=()=>{stopSpotify();go("sound-tiles-screen")};$("finish-sound-world").onclick=()=>go("sound-ending-screen");$("back-from-sound-ending").onclick=()=>go("sound-tiles-screen");$("sound-key-button").onclick=()=>checkKey("sound-key-input","sound-key-message",PASS.sound,1);$("sound-key-input").onkeydown=e=>{if(e.key==="Enter")$("sound-key-button").click()};
-$("open-image-tiles").onclick=()=>{setTiles("image-tiles",images,"image");go("image-tiles-screen")};$("image-tiles").onclick=e=>{const b=e.target.closest("[data-image]");if(!b)return;currentImage=images[b.dataset.image];if(currentImage.video)atlasPrefetchVideo(currentImage.video);$("image-detail-title").textContent=currentImage.title;$("image-main-text").innerHTML=para(currentImage.main);$("image-why-text").innerHTML=para(currentImage.why);setPanelState("image-why-text",false,true);$("toggle-image-why").textContent=currentImage.whyLabel||"Dlaczego zachwyca…";go("image-detail-screen")};$("toggle-image-why").onclick=()=>togglePanel("image-why-text");$("show-image-gallery").onclick=()=>{
+$("open-sound-tiles").onclick=()=>{
+ setTiles("sound-tiles",sounds,"sound");
+ go("sound-tiles-screen");
+ setTimeout(()=>{
+  Object.values(sounds).forEach((track,i)=>{
+   setTimeout(()=>atlasPrefetchAudio(track.audio),i*250);
+  });
+ },200);
+};$("sound-tiles").onclick=e=>{const b=e.target.closest("[data-sound]");if(!b)return;currentSound=sounds[b.dataset.sound];atlasPrefetchAudio(currentSound.audio);$("sound-detail-title").textContent=currentSound.title;$("sound-detail-description").innerHTML=para(currentSound.p);stopSpotify();go("sound-detail-screen")};$("show-spotify-player").onclick=()=>{if(currentSound)buildAudioPlayer(currentSound)};$("back-to-sound-tiles").onclick=()=>{stopSpotify();go("sound-tiles-screen")};$("finish-sound-world").onclick=()=>go("sound-ending-screen");$("back-from-sound-ending").onclick=()=>go("sound-tiles-screen");$("sound-key-button").onclick=()=>checkKey("sound-key-input","sound-key-message",PASS.sound,1);$("sound-key-input").onkeydown=e=>{if(e.key==="Enter")$("sound-key-button").click()};
+$("open-image-tiles").onclick=()=>{
+ setTiles("image-tiles",images,"image");
+ go("image-tiles-screen");
+ setTimeout(()=>atlasPrefetchVideo("assets/tango.mp4"),300);
+ setTimeout(()=>atlasPrefetchVideo("assets/pragnienie-film.mp4"),1800);
+};$("image-tiles").onclick=e=>{const b=e.target.closest("[data-image]");if(!b)return;currentImage=images[b.dataset.image];if(currentImage.video)atlasPrefetchVideo(currentImage.video);$("image-detail-title").textContent=currentImage.title;$("image-main-text").innerHTML=para(currentImage.main);$("image-why-text").innerHTML=para(currentImage.why);setPanelState("image-why-text",false,true);$("toggle-image-why").textContent=currentImage.whyLabel||"Dlaczego zachwyca…";go("image-detail-screen")};$("toggle-image-why").onclick=()=>togglePanel("image-why-text");$("show-image-gallery").onclick=()=>{
  if(currentImage.video){
   stopSpotify();
   const video=$("image-video");
