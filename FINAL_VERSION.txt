@@ -1,0 +1,4 @@
+ATLAS FINAL SPRAWDZONY
+Wersja: atlas-final-1
+Media: prefetch po poprawnym logowaniu + persistent Cache Storage + Blob seeking
+Service worker: wyłączony

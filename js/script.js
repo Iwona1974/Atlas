@@ -8,11 +8,11 @@ const IMAGE_INTRO=["Jedni dostrzegają światło. Inni kolory, detale.","Ale naj
 const TASTE_INTRO=["Ma niezwykłą moc. Czasem pozostaje na języku znacznie dłużej niż można by się spodziewać... choć nie zawsze chodzi o jedzenie.","To wspomnienia, miejsca, podróże i chwile, do których chce się wracać.","Niektóre smaki zapamiętuje się na całe życie.","Nie dlatego, że były niezwykłe.","Dlatego, że pojawiły się we właściwym momencie."];
 const SMELL_INTRO=["Czasem wystarczy jeden oddech.","I nagle wszystko zatrzymuje się na ułamek sekundy. Wracają emocje, zanim zdążymy je nazwać, a zwykły moment staje się wspomnieniem.","Choć sam zapach trwa tylko chwilę, potrafi przenieść nas setki kilometrów dalej, przywołać letni poranek sprzed wielu lat albo przypomnieć osobę, której nie ma obok.","Jest ulotny tylko z pozoru.","Nie opowiada historii.","Sprawia, że przeżywamy ją na nowo."];
 const TOUCH=["Próbowałam pokazać Ci, jak odbieram świat dźwiękiem, obrazem, smakiem i zapachem.","Zachęcić Cię, żebyś odkrył rzeczy, które mnie zachwycają, zaskakują i sprawiają przyjemność.","Jednak tego jednego nie potrafię opisać. Bo słowa zawsze okazują się niewystarczające.","Nie przypuszczałam, że czyjś dotyk może być aż tak różny od wszystkich pozostałych. Nie wiem, dlaczego właśnie Twój działa na mnie inaczej.","Wiem tylko, że kiedy mnie dotykasz, cały świat na moment przestaje mieć znaczenie. To jedno z tych doświadczeń, o których trudno zapomnieć.","Nie wiem, czy można to racjonalnie wyjaśnić. Być może niektórych rzeczy nie trzeba rozumieć. Wystarczy zaufać. I po prostu je przyjąć.","Może właśnie dlatego dotyk jest jedynym zmysłem, którego nie potrafię zamknąć w słowach.","Zostawiam to chwili, która być może kiedyś sama opowie tę historię…"];
-const sounds={adrenalina:{title:"Adrenalina",p:["Słowa nie wystarczą, by opowiedzieć o niektórych emocjach.","Można je tylko poczuć."],audio:"assets/audio/adrenalina.mp3?v=mobile-final-3",trackTitle:"Formula 1 Theme",artist:"Brian Tyler"},pomiedzy:{title:"Pomiędzy",p:["Niektóre dźwięki potrafią brzmieć tak, jakby istniały od zawsze.","Trafiają gdzieś głębiej. Poruszają."],audio:"assets/audio/pomiedzy.mp3?v=mobile-final-3",trackTitle:"Trollabundin",artist:"Slor"},"z-dystansem":{title:"Z dystansem",p:["Są melodie, które przypominają, że nie wszystko musi być na serio.","I całe szczęście."],audio:"assets/audio/z-dystansem.mp3?v=mobile-final-3",trackTitle:"Love Today",artist:"Mika"},nieoczywiste:{title:"Nieoczywiste",p:["To, co nieoczywiste, często skrywa najwięcej.","Czasem wystarczy po prostu zaufać."],audio:"assets/audio/nieoczywiste.mp3?v=mobile-final-3",trackTitle:"Is She With You (Wonder Woman Theme)",artist:"Hans Zimmer"},"po-zmroku":{title:"Po zmroku",p:["Po zmroku wszystko brzmi trochę inaczej.","Niektóre melodie najlepiej odnajdują się właśnie wtedy."],audio:"assets/audio/po-zmroku.mp3?v=mobile-final-3",trackTitle:"Fishing by Moonlight",artist:"Breton Vivian"},niezmiennie:{title:"Niezmiennie",p:["Niektóre skojarzenia nigdy się nie zmieniają.","Niezmiennie... Ty."],audio:"assets/audio/niezmiennie.mp3?v=mobile-final-3",trackTitle:"Sex on Fire",artist:"Kings of Leon"}};
-const images={barwy:{title:"Barwy",whyLabel:"Dlaczego zachwycają…",main:["Niektóre miejsca wyglądają tak, jakby ktoś dodał im zbyt wiele koloru.","Zachwycają barwami.","Turkusowa woda, drewniane kładki prowadzące tuż nad jej powierzchnią i dziesiątki wodospadów sprawiają, że trudno uwierzyć, że to wszystko stworzyła natura. Jeziora Plitwickie nieustannie się zmieniają. Wapienne osady od tysięcy lat tworzą nowe progi, wodospady i brzegi. Kolor wody zmienia się niemal każdego dnia. W zależności od kąta padania światła, ilości minerałów i organizmów żyjących w jeziorze potrafi przybierać odcienie od szmaragdowej zieleni, przez intensywny turkus, aż po głęboki błękit.","Jeśli kiedyś tam trafisz, zacznij dzień wcześnie, zanim pojawią się tłumy.","Wtedy usłyszysz szum wody, a poranne światło wydobędzie z jezior ich najbardziej niezwykłe barwy.","To jeden z tych obrazów, którego żadne zdjęcie nie potrafi oddać w pełni."],why:["Plitwice są jednym z niewielu miejsc, gdzie człowiek nie próbował poprawiać natury.","Drewniane kładki i wyznaczone trasy prowadzą przez park tak dyskretnie, że ma się wrażenie, jakby były jego częścią. Tutaj to nie człowiek wyznacza rytm. Robi to woda.","Szesnaście jezior połączonych dziesiątkami wodospadów sprawia, że każda trasa pokazuje park z zupełnie innej perspektywy. Krajobraz nieustannie się zmienia.","Człowiek jest tutaj tylko gościem. Gospodarzem od zawsze pozostaje natura."],media:["assets/barwy-1.jpg?v=mobile-final-3","assets/barwy-2.jpg?v=mobile-final-3","assets/barwy-3.jpg?v=mobile-final-3"]},czas:{title:"Czas",whyLabel:"Dlaczego zachwycają…",main:["Niektóre widoki sprawiają, że człowiek milknie z zachwytu.","Meteory są właśnie jednym z nich.","Ogromne skały wyrastają wysoko ponad ziemię, a na ich szczytach wieki temu zbudowano klasztory. Z dwudziestu czterech przetrwało zaledwie sześć. Nadal są zamieszkane przez mnichów i mniszki. Przez wiele stuleci jedyną drogą prowadzącą do klasztorów były liny, siatki i drewniane drabiny.","Nazwa „Meteory” oznacza „zawieszone w powietrzu”. Patrząc na nie, trudno powiedzieć, co robi większe wrażenie, same skały czy miejsce, które człowiek wybrał na swój dom."],why:["Przez miliony lat wiatr, woda i słońce cierpliwie rzeźbiły skały, nadając im kształty, które dziś wydają się niemal nierealne. Roztaczający się widok trudno zamknąć w jednym kadrze. Z każdym krokiem światło, perspektywa i odległość odsłaniają niezwykłe formy. To miejsce, do którego najlepiej pasuje słowo „majestatyczne”."],media:["assets/czas-1.jpg?v=mobile-final-3","assets/czas-2.jpg?v=mobile-final-3","assets/czas-3.jpg?v=mobile-final-3"]},bezkres:{title:"Bezkres",main:["Niebo – obraz, który towarzyszy nam od tysięcy lat. Patrzyli w nie podróżnicy, żeglarze i poeci.","Każda gwiazda, którą widzimy, opowiada historię swojej przeszłości. Jej światło podróżowało do Ziemi setki, tysiące, a czasem nawet miliony lat.","Na nocnym niebie kryją się gwiazdozbiory, Droga Mleczna i Galaktyka Andromedy, która jest najbardziej odległym obiektem, jaki można dostrzec gołym okiem.","Światło, które dziś z niej do nas dociera, wyruszyło w drogę około 2,5 miliona lat temu. Kiedy patrzysz na Andromedę, widzisz ją taką, jaka była na długo przed pojawieniem się człowieka.","To jedna z tych chwil, które przypominają, jak ogromny jest wszechświat i jak niewiele potrzeba, żeby na niego spojrzeć…","Wystarczy unieść głowę."],why:["Im dalej od świateł miasta, tym więcej gwiazd zaczyna wyłaniać się z ciemności. Niebo nie odsłania wszystkiego od razu. Potrzebuje chwili, by pokazać swoje najpiękniejsze obrazy.","Najpierw dostrzegasz pojedyncze gwiazdy. Potem charakterystyczne gwiazdozbiory. A kiedy wydaje się, że nic już nie może Cię zaskoczyć, przez niebo nagle przemyka krótki błysk. To nie spadająca gwiazda, lecz maleńki okruch materii, który po milionach kilometrów podróży kończy swoją drogę w ziemskiej atmosferze.","Im dłużej patrzysz, tym mniej myślisz o gwiazdach, ale o tym jak niezwykły jest świat, którego jesteśmy częścią."],media:["assets/bezkres-1.jpg?v=mobile-final-3","assets/bezkres-2.jpg?v=mobile-final-3","assets/bezkres-3.jpg?v=mobile-final-3"]},przyciaganie:{title:"Przyciąganie",main:["Tango jest jedynym tańcem, w którym bliskość potrafi być jednocześnie namiętna i niebezpieczna.","To opowieść o napięciu, pożądaniu i niepewności. O przyciąganiu, które rodzi się między dwojgiem ludzi. Zmysłowości i pragnieniu, które rośnie z każdym krokiem. I o cichej próbie sił, w której tak naprawdę nikt nie chce wygrać.","Narodziło się pod koniec XIX wieku na ulicach Buenos Aires. Tańczyli je ludzie z różnych kultur, często samotni, tęskniący za domem, próbujący odnaleźć swoje miejsce. Dlatego niesie tyle emocji.","W tangu istnieje coś, co Argentyńczycy nazywają abrazo, czyli objęcie. To od niego wszystko się zaczyna. Nie od pierwszego kroku, lecz od zaufania, bliskości i napięcia, które pojawia się między dwojgiem ludzi.","Może właśnie dlatego tango nie jest tylko tańcem.","Jest rozmową, której nie potrzeba słów."],why:["Tango nie jest spokojne. Iskrzy od pierwszego spojrzenia.","Każdy krok to nieustanna gra. Przyciąganie i prowokowanie. Zaproszenie i odmowa. Pewność i zawahanie.","Przez kilka minut dwoje ludzi sprawdza, jak bardzo mogą się do siebie zbliżyć.","Właśnie dlatego tango wydaje się jednocześnie namiętne i niebezpieczne.","Elektryzuje."],video:"assets/tango.mp4?v=mobile-final-3"},swiatlo:{title:"Światło",whyLabel:"Dlaczego zachwycają…",main:["Linia ramion, napięcie mięśni, faktura skóry, drobne gesty. Te zdjęcia to nie tylko kadry, to znacznie więcej.","Na fotografiach Herba Rittsa ciało przestaje być głównym bohaterem. Staje się formą, światłem i cieniem.","Ritts udowodnił, że do stworzenia niezwykłego obrazu nie potrzeba wyszukanych dekoracji. Często pracował z prostym tłem, naturalnym światłem i ograniczoną liczbą elementów. Dzięki temu wzrok podąża tam, gdzie chciał go poprowadzić fotograf.","Jego zdjęcia od ponad czterdziestu lat inspirują świat mody, filmu i fotografii. Przed jego obiektywem stawali najwięksi aktorzy, modele i muzycy, ale nazwiska schodziły na drugi plan. Najważniejsza była kompozycja i ponadczasowość obrazu.","Jego fotografie do dziś nie tracą nic ze swojego piękna."],why:["Herb Ritts udowodnił, że nie trzeba wiele, by stworzyć niezwykły obraz.","Światło. Cień. Prosty gest. Człowiek.","Cała reszta przestaje mieć znaczenie.","Na tych zdjęciach prawie nic się nie dzieje. Nie krzyczą kolorami. Nie próbują zaskoczyć.","Nie ma tu zbędnych elementów. Jest prostota.","Im dłużej patrzysz, tym więcej zaczynasz dostrzegać.","I właśnie dlatego każdy detal ma znaczenie."],media:["assets/swiatlo-1.jpg?v=mobile-final-3","assets/swiatlo-2.jpg?v=mobile-final-3","assets/swiatlo-3.jpg?v=mobile-final-3"]},pragnienie:{title:"Pragnienie",main:["Niektóre filmy ogląda się dla fabuły. Inne dla tego, co potrafią w nas obudzić.","<em>9½ tygodnia</em> to jeden z najbardziej zmysłowych filmów w historii kina. Nie dlatego, że pokazuje bliskość. Dlatego, że buduje ją powoli spojrzeniami, dotykiem, gestami.","To film pełen napięcia. Takiego, które towarzyszy widzowi od początku do końca.","Nie wszystko zostaje tu dopowiedziane. I być może właśnie dlatego wyobraźnia nie przestaje pracować.","Jeśli kiedyś będziesz miał ochotę go obejrzeć, nie nastawiaj się na historię miłosną. To raczej opowieść o fascynacji, odkrywaniu i pożądaniu."],why:["Ten film pozwala emocjom dojrzewać. Napięcie narasta powoli, scena po scenie.","Każde spojrzenie, każdy gest budują atmosferę, działają na wyobraźnię. Muzyka nie jest tu tłem, lecz częścią opowieści.","Wsłuchaj się w nią. Nie oglądaj tego filmu tylko oczami.","Bo obrazy nie pokazują wszystkiego…"],video:"assets/pragnienie-film.mp4?v=mobile-final-3"}};
-const tastes={przebudzenie:{title:"Przebudzenie",dish:"Café Touba (2 filiżanki)",intro:["Nie każde przebudzenie zaczyna się o poranku, a pierwszy łyk nie zawsze mówi całą prawdę.","Najpierw pojawia się głęboki aromat. Potem zaskoczenie na języku.","Resztę odkrywa się dopiero po chwili."],story:["Są kawy, które budzą.","I są takie, które potrafią zaskoczyć.","Café Touba należy zdecydowanie do tej drugiej grupy.","Jej historia zaczyna się pod koniec XIX wieku w Senegalu. To właśnie tam szejk Ahmadou Bamba, duchowy przywódca bractwa muridów, zaczął dodawać do kawy pieprz gwinejski zwany djar. Później pojawiły się także goździki. Powstało połączenie, które do dziś potrafi zaskoczyć nawet tych, którzy myślą, że o kawie wiedzą już wszystko.","Nos podpowiada, że to zwyczajna kawa.","Język bardzo szybko udowadnia, że się myli.","Najpierw pojawia się znajoma gorycz świeżo palonych ziaren. Chwilę później do głosu dochodzi ciepło przypraw, które zostaje jeszcze długo po ostatnim łyku."],img:"assets/smak-cafe-touba.jpg?v=mobile-final-3",ingredients:["20 g świeżo zmielonej kawy (100% Arabica lub mieszanka Arabica/Robusta)","400 ml wody","½ łyżeczki grubo rozgniecionego pieprzu gwinejskiego (djar)","2 goździki","cukier do smaku (opcjonalnie)"],steps:["Zagotuj wodę.","Dodaj kawę, pieprz gwinejski i goździki.","Gotuj na bardzo małym ogniu przez około 3 minuty, nie dopuszczając do mocnego wrzenia.","Zdejmij z ognia i odstaw na 2–3 minuty, aby fusy opadły na dno.","Delikatnie przelej napar przez drobne sitko lub filtr do filiżanki.","Pij bez mleka. Jeśli wolisz łagodniejszy smak, możesz dodać odrobinę cukru."],tip:"Nie spiesz się. Daj tej kawie chwilę. Pierwszy łyk potrafi zaskoczyć, ale dopiero kolejny pokazuje, dlaczego Café Touba od ponad stu lat zachwyca mieszkańców Senegalu."},powoli:{title:"Powoli",dish:"Dakos (2 porcje)",intro:["Niektóre przyjemności nie lubią pośpiechu.","Potrzebują chwili, żeby stać się dokładnie tym, czym powinny.","I właśnie wtedy są najlepsze."],story:["Czasem z kilku prostych składników potrafi powstać coś naprawdę wyjątkowego.","Tak właśnie jest na Krecie.","Dakos narodził się z codzienności. Twardy, pieczony dwa razy jęczmienny chleb zabierali ze sobą pasterze i rolnicy, bo nie psuł się nawet przez wiele tygodni. Dopiero przed posiłkiem skrapiano go oliwą, dodawano dojrzałe pomidory, ser i kilka oliwek.","Tak z pozornie zwyczajnych składników powstało danie, które dziś jest jednym z kulinarnych symboli Krety.","Mieszkańcy wyspy często powtarzają, że o Dakosie decyduje nie liczba składników, ale ich jakość. Oliwa z pierwszego tłoczenia, pomidory dojrzewające w śródziemnomorskim słońcu i dobry ser potrafią stworzyć smak, którego nie da się podrobić."],img:"assets/smak-dakos.jpg?v=mobile-final-3",ingredients:["2 jęczmienne suchary paximadi (jeśli ich nie znajdziesz, możesz użyć razowego pieczywa lub pełnoziarnistych grzanek)","2 dojrzałe pomidory","120 g sera feta lub bardziej tradycyjnie, sera mizithra","3–4 łyżki dobrej oliwy z oliwek extra virgin","kilka czarnych oliwek","1 łyżeczka suszonego oregano","świeżo mielony pieprz","odrobina soli (tylko jeśli używasz niesolonego sera)"],steps:["Jeśli używasz sucharów paximadi, delikatnie skrop je kilkoma łyżkami wody, aby lekko zmiękły. Nie mocz ich zbyt długo – powinny pozostać chrupiące w środku.","Skrop pieczywo oliwą z oliwek.","Pomidory zetrzyj na tarce lub bardzo drobno pokrój i rozłóż równomiernie na pieczywie.","Pokrusz fetę (lub mizithrę) i posyp nią pomidory.","Dodaj oliwki i oprósz oregano oraz świeżo mielonym pieprzem.","Na koniec polej całość jeszcze odrobiną oliwy extra virgin."],tip:"Nie jedz go od razu. Daj mu kilka minut. Właśnie wtedy dzieje się cała magia."},"na-przekor":{title:"Na przekór",dish:"Spaghetti all'Assassina (2 porcje)",intro:["Niektóre rzeczy od początku robi się inaczej.","Wbrew zasadom. Wbrew przyzwyczajeniom.","Czasem właśnie wtedy zaczyna się najbardziej zaskakująca historia.","Wystarczy się odważyć."],story:["Większość kucharzy zrobi wszystko, żeby makaron się nie przypalił.","W Bari właśnie od tego wszystko się zaczęło.","Historia Spaghetti all'Assassina sięga lat 60. XX wieku. Według najpopularniejszej opowieści ktoś postanowił przygotować makaron w sposób, którego żaden Włoch wcześniej by nie pochwalił. Zamiast ugotować spaghetti, wrzucił je prosto na patelnię z pikantnym sosem pomidorowym i pozwolił, by ogień zrobił swoje.","To, co miało być kulinarną wpadką, okazało się prawdziwym odkryciem.","Makaron stał się chrupiący, lekko przypalony i pełen intensywnego smaku. Podobno jeden z gości po pierwszym kęsie wykrzyknął: „To zabójstwo!”. I właśnie od tych słów miała narodzić się nazwa all'Assassina - „po zabójczemu”.","Do dziś mieszkańcy Bari powtarzają, że tego dania nie da się przygotować zbyt ostrożnie. Trzeba mieć odrobinę odwagi, zaufać patelni i wysokiej temperaturze.","Bo tutaj przypalone wcale nie oznacza zepsute.","Wręcz przeciwnie."],img:"assets/smak-assassina.jpg?v=mobile-final-3",ingredients:["200 g spaghetti","400 ml passaty pomidorowej","400 ml gorącej wody lub bulionu warzywnego","2 ząbki czosnku","2–3 łyżki oliwy z oliwek extra virgin","1 łyżeczka płatków chili (lub mniej – do smaku)","szczypta cukru (opcjonalnie)","sól"],steps:["Wymieszaj passatę z gorącą wodą (lub bulionem) i lekko posól. Utrzymuj sos gorący przez cały czas przygotowywania.","Na dużej patelni rozgrzej oliwę. Dodaj drobno posiekany czosnek i płatki chili. Smaż kilkanaście sekund, aż uwolnią aromat.","Połóż suche spaghetti bezpośrednio na patelni. Pozwól mu lekko się przyrumienić przez około 2 minuty.","Wlej pierwszą porcję gorącego sosu tak, aby przykrył makaron. Gotuj na średnio wysokim ogniu.","Gdy płyn niemal całkowicie odparuje, dolewaj kolejne porcje sosu. Nie mieszaj zbyt często – pozwól makaronowi miejscami przywierać do patelni i delikatnie się przypalać.","Powtarzaj ten proces przez około 12–15 minut, aż makaron będzie al dente, a na spodzie utworzy się charakterystyczna, chrupiąca, lekko przypalona warstwa.","Podawaj od razu, najlepiej prosto z patelni. W tradycyjnej wersji nie dodaje się sera – główną rolę grają pomidory, chili i charakterystyczny smak przypieczonego makaronu."],tip:"Nie bój się kiedy makaron zacznie się przypiekać. Właśnie wtedy wszystko idzie zgodnie z planem."},ulotne:{title:"Ulotne",dish:"Sorbet cytrynowy z Amalfi (4 porcje)",intro:["Niektóre chwile pojawiają się niespodziewanie.","Trwają krócej niż byśmy chcieli. Istnieją tylko tu i teraz.","Może właśnie dlatego smakują tak dobrze."],story:["Na wybrzeżu Amalfi cytryny pachną inaczej.","Może to zasługa słońca. Może morskiego powietrza. A może po prostu tego miejsca.","Dlatego mieszkańcy tego regionu od dawna wykorzystują je nie tylko do przygotowania słynnego limoncello. Wypełniają ich skórki lodowatym sorbetem, zamieniając prosty deser w coś, niezwykłego.","To nie jest deser, który je się powoli ponieważ topi się niemal od razu.","I właśnie w tym tkwi cały jego urok.","Bo najpiękniejsze chwile nie czekają, aż będziemy na nie gotowi."],img:"assets/smak-sorbet.jpg?v=mobile-final-3",ingredients:["4 duże cytryny (najlepiej niewoskowane)","150 ml wody","120 g drobnego cukru","150 ml świeżo wyciśniętego soku z cytryn","skórka otarta z 1 cytryny","1 białko jajka (opcjonalnie – dla bardziej puszystej konsystencji)"],steps:["Zagotuj wodę z cukrem. Mieszaj do całkowitego rozpuszczenia cukru, a następnie odstaw syrop do ostygnięcia.","Dodaj sok z cytryn oraz otartą skórkę i dokładnie wymieszaj.","Jeśli używasz białka, ubij je na lekką pianę i delikatnie połącz z masą. Dzięki temu sorbet będzie bardziej aksamitny.","Przelej całość do pojemnika i włóż do zamrażarki na około 4–5 godzin. Co 30–40 minut przemieszaj widelcem, aby rozbić tworzące się kryształki lodu.","Podawaj dobrze schłodzony."],tip:"Wydrąż skórki cytryn i schowaj je na kilka godzin do zamrażarki. Nie zmieni to smaku, ale zmieni wszystko wokół niego."},oczekiwanie:{title:"Oczekiwanie",dish:"Gambas al Ajillo (2 porcje)",intro:["Czasem najwięcej dzieje się tuż przed.","To właśnie wtedy wyobraźnia robi pierwszy krok.","Reszta przychodzi sama."],story:["Niektóre potrawy rozpoznaje się jeszcze, zanim się je zobaczy.","Najpierw rozgrzana oliwa. Chwilę później czosnek, który powoli wypełnia swoim aromatem całe pomieszczenie. Potem charakterystyczne skwierczenie - dźwięk, którego nie da się pomylić z żadnym innym.","I już wiadomo, co za chwilę się wydarzy.","Gambas al Ajillo to jedno z tych dań, których nie przypisuje się jednemu miejscu. Od pokoleń przygotowuje się je niemal w całej Hiszpanii. Na wybrzeżu, w niewielkich barach i rodzinnych domach.","Dla wielu Hiszpanów oznacza tylko jedno.","Wieczór właśnie się zaczyna…"],img:"assets/smak-gambas.jpg?v=mobile-final-3",ingredients:["300 g surowych, obranych krewetek","5–6 ząbków czosnku","80 ml dobrej oliwy z oliwek extra virgin","½ łyżeczki płatków chili (lub więcej, jeśli lubisz ostrzejsze smaki)","1 łyżka posiekanej natki pietruszki","sól","bagietka do podania"],steps:["Osusz krewetki papierowym ręcznikiem.","Czosnek pokrój w cienkie plasterki.","Rozgrzej oliwę na patelni lub w glinianym naczyniu. Dodaj czosnek i płatki chili. Smaż na niewielkim ogniu około minuty – czosnek powinien się lekko zezłocić, ale nie zbrązowieć.","Dodaj krewetki i smaż po 1–2 minuty z każdej strony, aż staną się różowe.","Posyp natką pietruszki i od razu podawaj z chrupiącą bagietką, którą warto zanurzać w aromatycznej oliwie."],tip:"Zostaw kawałek bagietki na sam koniec. Będzie Ci potrzebny."},niedosyt:{title:"Niedosyt",dish:"Southside (1 porcja)",intro:["Są chwile, które mogłyby trwać odrobinę dłużej.","Nie dlatego, że było za mało.","Dlatego, że było dokładnie tak, jak powinno."],story:["Nie jest słodki.","Nie jest ciężki.","Jest świeży, lekki, intensywny i… pełen kontrastów.","Najpierw pojawia się chłód mięty. Chwilę później cytrusowa świeżość. Na końcu gin, który spokojnie spina wszystko w jedną całość.","Do dziś nikt nie potrafi jednoznacznie powiedzieć, gdzie narodził się Southside. Jedni twierdzą, że w eleganckim nowojorskim klubie. Inni są przekonani, że jego historia zaczęła się w czasach amerykańskiej prohibicji, kiedy świeża mięta i sok z cytryny pomagały ukryć smak kiepskiego ginu.","Ta tajemnica przetrwała ponad sto lat i chyba właśnie dlatego dodaje mu tyle uroku."],img:"assets/smak-southside.jpg?v=mobile-final-3",ingredients:["50 ml ginu","25 ml świeżo wyciśniętego soku z cytryny","20 ml syropu cukrowego","8–10 świeżych listków mięty","kostki lodu"],steps:["Delikatnie ugnieć listki mięty w shakerze lub wysokiej szklance. Nie rozcieraj ich zbyt mocno – mają uwolnić aromat, a nie gorycz.","Dodaj gin, sok z cytryny, syrop cukrowy i garść kostek lodu.","Energicznie wstrząsaj przez około 15 sekund.","Przelej przez sitko do dobrze schłodzonego kieliszka koktajlowego.","Udekoruj listkiem mięty."],tip:"Najpierw potrzyj listek mięty między palcami. Dopiero potem dodaj go jako ozdobę drinka. To wystarczy, żeby uwolnił cały swój aromat."}};
+const sounds={adrenalina:{title:"Adrenalina",p:["Słowa nie wystarczą, by opowiedzieć o niektórych emocjach.","Można je tylko poczuć."],audio:"assets/audio/adrenalina.mp3?v=atlas-final-1",trackTitle:"Formula 1 Theme",artist:"Brian Tyler"},pomiedzy:{title:"Pomiędzy",p:["Niektóre dźwięki potrafią brzmieć tak, jakby istniały od zawsze.","Trafiają gdzieś głębiej. Poruszają."],audio:"assets/audio/pomiedzy.mp3?v=atlas-final-1",trackTitle:"Trollabundin",artist:"Slor"},"z-dystansem":{title:"Z dystansem",p:["Są melodie, które przypominają, że nie wszystko musi być na serio.","I całe szczęście."],audio:"assets/audio/z-dystansem.mp3?v=atlas-final-1",trackTitle:"Love Today",artist:"Mika"},nieoczywiste:{title:"Nieoczywiste",p:["To, co nieoczywiste, często skrywa najwięcej.","Czasem wystarczy po prostu zaufać."],audio:"assets/audio/nieoczywiste.mp3?v=atlas-final-1",trackTitle:"Is She With You (Wonder Woman Theme)",artist:"Hans Zimmer"},"po-zmroku":{title:"Po zmroku",p:["Po zmroku wszystko brzmi trochę inaczej.","Niektóre melodie najlepiej odnajdują się właśnie wtedy."],audio:"assets/audio/po-zmroku.mp3?v=atlas-final-1",trackTitle:"Fishing by Moonlight",artist:"Breton Vivian"},niezmiennie:{title:"Niezmiennie",p:["Niektóre skojarzenia nigdy się nie zmieniają.","Niezmiennie... Ty."],audio:"assets/audio/niezmiennie.mp3?v=atlas-final-1",trackTitle:"Sex on Fire",artist:"Kings of Leon"}};
+const images={barwy:{title:"Barwy",whyLabel:"Dlaczego zachwycają…",main:["Niektóre miejsca wyglądają tak, jakby ktoś dodał im zbyt wiele koloru.","Zachwycają barwami.","Turkusowa woda, drewniane kładki prowadzące tuż nad jej powierzchnią i dziesiątki wodospadów sprawiają, że trudno uwierzyć, że to wszystko stworzyła natura. Jeziora Plitwickie nieustannie się zmieniają. Wapienne osady od tysięcy lat tworzą nowe progi, wodospady i brzegi. Kolor wody zmienia się niemal każdego dnia. W zależności od kąta padania światła, ilości minerałów i organizmów żyjących w jeziorze potrafi przybierać odcienie od szmaragdowej zieleni, przez intensywny turkus, aż po głęboki błękit.","Jeśli kiedyś tam trafisz, zacznij dzień wcześnie, zanim pojawią się tłumy.","Wtedy usłyszysz szum wody, a poranne światło wydobędzie z jezior ich najbardziej niezwykłe barwy.","To jeden z tych obrazów, którego żadne zdjęcie nie potrafi oddać w pełni."],why:["Plitwice są jednym z niewielu miejsc, gdzie człowiek nie próbował poprawiać natury.","Drewniane kładki i wyznaczone trasy prowadzą przez park tak dyskretnie, że ma się wrażenie, jakby były jego częścią. Tutaj to nie człowiek wyznacza rytm. Robi to woda.","Szesnaście jezior połączonych dziesiątkami wodospadów sprawia, że każda trasa pokazuje park z zupełnie innej perspektywy. Krajobraz nieustannie się zmienia.","Człowiek jest tutaj tylko gościem. Gospodarzem od zawsze pozostaje natura."],media:["assets/barwy-1.jpg?v=atlas-final-1","assets/barwy-2.jpg?v=atlas-final-1","assets/barwy-3.jpg?v=atlas-final-1"]},czas:{title:"Czas",whyLabel:"Dlaczego zachwycają…",main:["Niektóre widoki sprawiają, że człowiek milknie z zachwytu.","Meteory są właśnie jednym z nich.","Ogromne skały wyrastają wysoko ponad ziemię, a na ich szczytach wieki temu zbudowano klasztory. Z dwudziestu czterech przetrwało zaledwie sześć. Nadal są zamieszkane przez mnichów i mniszki. Przez wiele stuleci jedyną drogą prowadzącą do klasztorów były liny, siatki i drewniane drabiny.","Nazwa „Meteory” oznacza „zawieszone w powietrzu”. Patrząc na nie, trudno powiedzieć, co robi większe wrażenie, same skały czy miejsce, które człowiek wybrał na swój dom."],why:["Przez miliony lat wiatr, woda i słońce cierpliwie rzeźbiły skały, nadając im kształty, które dziś wydają się niemal nierealne. Roztaczający się widok trudno zamknąć w jednym kadrze. Z każdym krokiem światło, perspektywa i odległość odsłaniają niezwykłe formy. To miejsce, do którego najlepiej pasuje słowo „majestatyczne”."],media:["assets/czas-1.jpg?v=atlas-final-1","assets/czas-2.jpg?v=atlas-final-1","assets/czas-3.jpg?v=atlas-final-1"]},bezkres:{title:"Bezkres",main:["Niebo – obraz, który towarzyszy nam od tysięcy lat. Patrzyli w nie podróżnicy, żeglarze i poeci.","Każda gwiazda, którą widzimy, opowiada historię swojej przeszłości. Jej światło podróżowało do Ziemi setki, tysiące, a czasem nawet miliony lat.","Na nocnym niebie kryją się gwiazdozbiory, Droga Mleczna i Galaktyka Andromedy, która jest najbardziej odległym obiektem, jaki można dostrzec gołym okiem.","Światło, które dziś z niej do nas dociera, wyruszyło w drogę około 2,5 miliona lat temu. Kiedy patrzysz na Andromedę, widzisz ją taką, jaka była na długo przed pojawieniem się człowieka.","To jedna z tych chwil, które przypominają, jak ogromny jest wszechświat i jak niewiele potrzeba, żeby na niego spojrzeć…","Wystarczy unieść głowę."],why:["Im dalej od świateł miasta, tym więcej gwiazd zaczyna wyłaniać się z ciemności. Niebo nie odsłania wszystkiego od razu. Potrzebuje chwili, by pokazać swoje najpiękniejsze obrazy.","Najpierw dostrzegasz pojedyncze gwiazdy. Potem charakterystyczne gwiazdozbiory. A kiedy wydaje się, że nic już nie może Cię zaskoczyć, przez niebo nagle przemyka krótki błysk. To nie spadająca gwiazda, lecz maleńki okruch materii, który po milionach kilometrów podróży kończy swoją drogę w ziemskiej atmosferze.","Im dłużej patrzysz, tym mniej myślisz o gwiazdach, ale o tym jak niezwykły jest świat, którego jesteśmy częścią."],media:["assets/bezkres-1.jpg?v=atlas-final-1","assets/bezkres-2.jpg?v=atlas-final-1","assets/bezkres-3.jpg?v=atlas-final-1"]},przyciaganie:{title:"Przyciąganie",main:["Tango jest jedynym tańcem, w którym bliskość potrafi być jednocześnie namiętna i niebezpieczna.","To opowieść o napięciu, pożądaniu i niepewności. O przyciąganiu, które rodzi się między dwojgiem ludzi. Zmysłowości i pragnieniu, które rośnie z każdym krokiem. I o cichej próbie sił, w której tak naprawdę nikt nie chce wygrać.","Narodziło się pod koniec XIX wieku na ulicach Buenos Aires. Tańczyli je ludzie z różnych kultur, często samotni, tęskniący za domem, próbujący odnaleźć swoje miejsce. Dlatego niesie tyle emocji.","W tangu istnieje coś, co Argentyńczycy nazywają abrazo, czyli objęcie. To od niego wszystko się zaczyna. Nie od pierwszego kroku, lecz od zaufania, bliskości i napięcia, które pojawia się między dwojgiem ludzi.","Może właśnie dlatego tango nie jest tylko tańcem.","Jest rozmową, której nie potrzeba słów."],why:["Tango nie jest spokojne. Iskrzy od pierwszego spojrzenia.","Każdy krok to nieustanna gra. Przyciąganie i prowokowanie. Zaproszenie i odmowa. Pewność i zawahanie.","Przez kilka minut dwoje ludzi sprawdza, jak bardzo mogą się do siebie zbliżyć.","Właśnie dlatego tango wydaje się jednocześnie namiętne i niebezpieczne.","Elektryzuje."],video:"assets/tango.mp4?v=atlas-final-1"},swiatlo:{title:"Światło",whyLabel:"Dlaczego zachwycają…",main:["Linia ramion, napięcie mięśni, faktura skóry, drobne gesty. Te zdjęcia to nie tylko kadry, to znacznie więcej.","Na fotografiach Herba Rittsa ciało przestaje być głównym bohaterem. Staje się formą, światłem i cieniem.","Ritts udowodnił, że do stworzenia niezwykłego obrazu nie potrzeba wyszukanych dekoracji. Często pracował z prostym tłem, naturalnym światłem i ograniczoną liczbą elementów. Dzięki temu wzrok podąża tam, gdzie chciał go poprowadzić fotograf.","Jego zdjęcia od ponad czterdziestu lat inspirują świat mody, filmu i fotografii. Przed jego obiektywem stawali najwięksi aktorzy, modele i muzycy, ale nazwiska schodziły na drugi plan. Najważniejsza była kompozycja i ponadczasowość obrazu.","Jego fotografie do dziś nie tracą nic ze swojego piękna."],why:["Herb Ritts udowodnił, że nie trzeba wiele, by stworzyć niezwykły obraz.","Światło. Cień. Prosty gest. Człowiek.","Cała reszta przestaje mieć znaczenie.","Na tych zdjęciach prawie nic się nie dzieje. Nie krzyczą kolorami. Nie próbują zaskoczyć.","Nie ma tu zbędnych elementów. Jest prostota.","Im dłużej patrzysz, tym więcej zaczynasz dostrzegać.","I właśnie dlatego każdy detal ma znaczenie."],media:["assets/swiatlo-1.jpg?v=atlas-final-1","assets/swiatlo-2.jpg?v=atlas-final-1","assets/swiatlo-3.jpg?v=atlas-final-1"]},pragnienie:{title:"Pragnienie",main:["Niektóre filmy ogląda się dla fabuły. Inne dla tego, co potrafią w nas obudzić.","<em>9½ tygodnia</em> to jeden z najbardziej zmysłowych filmów w historii kina. Nie dlatego, że pokazuje bliskość. Dlatego, że buduje ją powoli spojrzeniami, dotykiem, gestami.","To film pełen napięcia. Takiego, które towarzyszy widzowi od początku do końca.","Nie wszystko zostaje tu dopowiedziane. I być może właśnie dlatego wyobraźnia nie przestaje pracować.","Jeśli kiedyś będziesz miał ochotę go obejrzeć, nie nastawiaj się na historię miłosną. To raczej opowieść o fascynacji, odkrywaniu i pożądaniu."],why:["Ten film pozwala emocjom dojrzewać. Napięcie narasta powoli, scena po scenie.","Każde spojrzenie, każdy gest budują atmosferę, działają na wyobraźnię. Muzyka nie jest tu tłem, lecz częścią opowieści.","Wsłuchaj się w nią. Nie oglądaj tego filmu tylko oczami.","Bo obrazy nie pokazują wszystkiego…"],video:"assets/pragnienie-film.mp4?v=atlas-final-1"}};
+const tastes={przebudzenie:{title:"Przebudzenie",dish:"Café Touba (2 filiżanki)",intro:["Nie każde przebudzenie zaczyna się o poranku, a pierwszy łyk nie zawsze mówi całą prawdę.","Najpierw pojawia się głęboki aromat. Potem zaskoczenie na języku.","Resztę odkrywa się dopiero po chwili."],story:["Są kawy, które budzą.","I są takie, które potrafią zaskoczyć.","Café Touba należy zdecydowanie do tej drugiej grupy.","Jej historia zaczyna się pod koniec XIX wieku w Senegalu. To właśnie tam szejk Ahmadou Bamba, duchowy przywódca bractwa muridów, zaczął dodawać do kawy pieprz gwinejski zwany djar. Później pojawiły się także goździki. Powstało połączenie, które do dziś potrafi zaskoczyć nawet tych, którzy myślą, że o kawie wiedzą już wszystko.","Nos podpowiada, że to zwyczajna kawa.","Język bardzo szybko udowadnia, że się myli.","Najpierw pojawia się znajoma gorycz świeżo palonych ziaren. Chwilę później do głosu dochodzi ciepło przypraw, które zostaje jeszcze długo po ostatnim łyku."],img:"assets/smak-cafe-touba.jpg?v=atlas-final-1",ingredients:["20 g świeżo zmielonej kawy (100% Arabica lub mieszanka Arabica/Robusta)","400 ml wody","½ łyżeczki grubo rozgniecionego pieprzu gwinejskiego (djar)","2 goździki","cukier do smaku (opcjonalnie)"],steps:["Zagotuj wodę.","Dodaj kawę, pieprz gwinejski i goździki.","Gotuj na bardzo małym ogniu przez około 3 minuty, nie dopuszczając do mocnego wrzenia.","Zdejmij z ognia i odstaw na 2–3 minuty, aby fusy opadły na dno.","Delikatnie przelej napar przez drobne sitko lub filtr do filiżanki.","Pij bez mleka. Jeśli wolisz łagodniejszy smak, możesz dodać odrobinę cukru."],tip:"Nie spiesz się. Daj tej kawie chwilę. Pierwszy łyk potrafi zaskoczyć, ale dopiero kolejny pokazuje, dlaczego Café Touba od ponad stu lat zachwyca mieszkańców Senegalu."},powoli:{title:"Powoli",dish:"Dakos (2 porcje)",intro:["Niektóre przyjemności nie lubią pośpiechu.","Potrzebują chwili, żeby stać się dokładnie tym, czym powinny.","I właśnie wtedy są najlepsze."],story:["Czasem z kilku prostych składników potrafi powstać coś naprawdę wyjątkowego.","Tak właśnie jest na Krecie.","Dakos narodził się z codzienności. Twardy, pieczony dwa razy jęczmienny chleb zabierali ze sobą pasterze i rolnicy, bo nie psuł się nawet przez wiele tygodni. Dopiero przed posiłkiem skrapiano go oliwą, dodawano dojrzałe pomidory, ser i kilka oliwek.","Tak z pozornie zwyczajnych składników powstało danie, które dziś jest jednym z kulinarnych symboli Krety.","Mieszkańcy wyspy często powtarzają, że o Dakosie decyduje nie liczba składników, ale ich jakość. Oliwa z pierwszego tłoczenia, pomidory dojrzewające w śródziemnomorskim słońcu i dobry ser potrafią stworzyć smak, którego nie da się podrobić."],img:"assets/smak-dakos.jpg?v=atlas-final-1",ingredients:["2 jęczmienne suchary paximadi (jeśli ich nie znajdziesz, możesz użyć razowego pieczywa lub pełnoziarnistych grzanek)","2 dojrzałe pomidory","120 g sera feta lub bardziej tradycyjnie, sera mizithra","3–4 łyżki dobrej oliwy z oliwek extra virgin","kilka czarnych oliwek","1 łyżeczka suszonego oregano","świeżo mielony pieprz","odrobina soli (tylko jeśli używasz niesolonego sera)"],steps:["Jeśli używasz sucharów paximadi, delikatnie skrop je kilkoma łyżkami wody, aby lekko zmiękły. Nie mocz ich zbyt długo – powinny pozostać chrupiące w środku.","Skrop pieczywo oliwą z oliwek.","Pomidory zetrzyj na tarce lub bardzo drobno pokrój i rozłóż równomiernie na pieczywie.","Pokrusz fetę (lub mizithrę) i posyp nią pomidory.","Dodaj oliwki i oprósz oregano oraz świeżo mielonym pieprzem.","Na koniec polej całość jeszcze odrobiną oliwy extra virgin."],tip:"Nie jedz go od razu. Daj mu kilka minut. Właśnie wtedy dzieje się cała magia."},"na-przekor":{title:"Na przekór",dish:"Spaghetti all'Assassina (2 porcje)",intro:["Niektóre rzeczy od początku robi się inaczej.","Wbrew zasadom. Wbrew przyzwyczajeniom.","Czasem właśnie wtedy zaczyna się najbardziej zaskakująca historia.","Wystarczy się odważyć."],story:["Większość kucharzy zrobi wszystko, żeby makaron się nie przypalił.","W Bari właśnie od tego wszystko się zaczęło.","Historia Spaghetti all'Assassina sięga lat 60. XX wieku. Według najpopularniejszej opowieści ktoś postanowił przygotować makaron w sposób, którego żaden Włoch wcześniej by nie pochwalił. Zamiast ugotować spaghetti, wrzucił je prosto na patelnię z pikantnym sosem pomidorowym i pozwolił, by ogień zrobił swoje.","To, co miało być kulinarną wpadką, okazało się prawdziwym odkryciem.","Makaron stał się chrupiący, lekko przypalony i pełen intensywnego smaku. Podobno jeden z gości po pierwszym kęsie wykrzyknął: „To zabójstwo!”. I właśnie od tych słów miała narodzić się nazwa all'Assassina - „po zabójczemu”.","Do dziś mieszkańcy Bari powtarzają, że tego dania nie da się przygotować zbyt ostrożnie. Trzeba mieć odrobinę odwagi, zaufać patelni i wysokiej temperaturze.","Bo tutaj przypalone wcale nie oznacza zepsute.","Wręcz przeciwnie."],img:"assets/smak-assassina.jpg?v=atlas-final-1",ingredients:["200 g spaghetti","400 ml passaty pomidorowej","400 ml gorącej wody lub bulionu warzywnego","2 ząbki czosnku","2–3 łyżki oliwy z oliwek extra virgin","1 łyżeczka płatków chili (lub mniej – do smaku)","szczypta cukru (opcjonalnie)","sól"],steps:["Wymieszaj passatę z gorącą wodą (lub bulionem) i lekko posól. Utrzymuj sos gorący przez cały czas przygotowywania.","Na dużej patelni rozgrzej oliwę. Dodaj drobno posiekany czosnek i płatki chili. Smaż kilkanaście sekund, aż uwolnią aromat.","Połóż suche spaghetti bezpośrednio na patelni. Pozwól mu lekko się przyrumienić przez około 2 minuty.","Wlej pierwszą porcję gorącego sosu tak, aby przykrył makaron. Gotuj na średnio wysokim ogniu.","Gdy płyn niemal całkowicie odparuje, dolewaj kolejne porcje sosu. Nie mieszaj zbyt często – pozwól makaronowi miejscami przywierać do patelni i delikatnie się przypalać.","Powtarzaj ten proces przez około 12–15 minut, aż makaron będzie al dente, a na spodzie utworzy się charakterystyczna, chrupiąca, lekko przypalona warstwa.","Podawaj od razu, najlepiej prosto z patelni. W tradycyjnej wersji nie dodaje się sera – główną rolę grają pomidory, chili i charakterystyczny smak przypieczonego makaronu."],tip:"Nie bój się kiedy makaron zacznie się przypiekać. Właśnie wtedy wszystko idzie zgodnie z planem."},ulotne:{title:"Ulotne",dish:"Sorbet cytrynowy z Amalfi (4 porcje)",intro:["Niektóre chwile pojawiają się niespodziewanie.","Trwają krócej niż byśmy chcieli. Istnieją tylko tu i teraz.","Może właśnie dlatego smakują tak dobrze."],story:["Na wybrzeżu Amalfi cytryny pachną inaczej.","Może to zasługa słońca. Może morskiego powietrza. A może po prostu tego miejsca.","Dlatego mieszkańcy tego regionu od dawna wykorzystują je nie tylko do przygotowania słynnego limoncello. Wypełniają ich skórki lodowatym sorbetem, zamieniając prosty deser w coś, niezwykłego.","To nie jest deser, który je się powoli ponieważ topi się niemal od razu.","I właśnie w tym tkwi cały jego urok.","Bo najpiękniejsze chwile nie czekają, aż będziemy na nie gotowi."],img:"assets/smak-sorbet.jpg?v=atlas-final-1",ingredients:["4 duże cytryny (najlepiej niewoskowane)","150 ml wody","120 g drobnego cukru","150 ml świeżo wyciśniętego soku z cytryn","skórka otarta z 1 cytryny","1 białko jajka (opcjonalnie – dla bardziej puszystej konsystencji)"],steps:["Zagotuj wodę z cukrem. Mieszaj do całkowitego rozpuszczenia cukru, a następnie odstaw syrop do ostygnięcia.","Dodaj sok z cytryn oraz otartą skórkę i dokładnie wymieszaj.","Jeśli używasz białka, ubij je na lekką pianę i delikatnie połącz z masą. Dzięki temu sorbet będzie bardziej aksamitny.","Przelej całość do pojemnika i włóż do zamrażarki na około 4–5 godzin. Co 30–40 minut przemieszaj widelcem, aby rozbić tworzące się kryształki lodu.","Podawaj dobrze schłodzony."],tip:"Wydrąż skórki cytryn i schowaj je na kilka godzin do zamrażarki. Nie zmieni to smaku, ale zmieni wszystko wokół niego."},oczekiwanie:{title:"Oczekiwanie",dish:"Gambas al Ajillo (2 porcje)",intro:["Czasem najwięcej dzieje się tuż przed.","To właśnie wtedy wyobraźnia robi pierwszy krok.","Reszta przychodzi sama."],story:["Niektóre potrawy rozpoznaje się jeszcze, zanim się je zobaczy.","Najpierw rozgrzana oliwa. Chwilę później czosnek, który powoli wypełnia swoim aromatem całe pomieszczenie. Potem charakterystyczne skwierczenie - dźwięk, którego nie da się pomylić z żadnym innym.","I już wiadomo, co za chwilę się wydarzy.","Gambas al Ajillo to jedno z tych dań, których nie przypisuje się jednemu miejscu. Od pokoleń przygotowuje się je niemal w całej Hiszpanii. Na wybrzeżu, w niewielkich barach i rodzinnych domach.","Dla wielu Hiszpanów oznacza tylko jedno.","Wieczór właśnie się zaczyna…"],img:"assets/smak-gambas.jpg?v=atlas-final-1",ingredients:["300 g surowych, obranych krewetek","5–6 ząbków czosnku","80 ml dobrej oliwy z oliwek extra virgin","½ łyżeczki płatków chili (lub więcej, jeśli lubisz ostrzejsze smaki)","1 łyżka posiekanej natki pietruszki","sól","bagietka do podania"],steps:["Osusz krewetki papierowym ręcznikiem.","Czosnek pokrój w cienkie plasterki.","Rozgrzej oliwę na patelni lub w glinianym naczyniu. Dodaj czosnek i płatki chili. Smaż na niewielkim ogniu około minuty – czosnek powinien się lekko zezłocić, ale nie zbrązowieć.","Dodaj krewetki i smaż po 1–2 minuty z każdej strony, aż staną się różowe.","Posyp natką pietruszki i od razu podawaj z chrupiącą bagietką, którą warto zanurzać w aromatycznej oliwie."],tip:"Zostaw kawałek bagietki na sam koniec. Będzie Ci potrzebny."},niedosyt:{title:"Niedosyt",dish:"Southside (1 porcja)",intro:["Są chwile, które mogłyby trwać odrobinę dłużej.","Nie dlatego, że było za mało.","Dlatego, że było dokładnie tak, jak powinno."],story:["Nie jest słodki.","Nie jest ciężki.","Jest świeży, lekki, intensywny i… pełen kontrastów.","Najpierw pojawia się chłód mięty. Chwilę później cytrusowa świeżość. Na końcu gin, który spokojnie spina wszystko w jedną całość.","Do dziś nikt nie potrafi jednoznacznie powiedzieć, gdzie narodził się Southside. Jedni twierdzą, że w eleganckim nowojorskim klubie. Inni są przekonani, że jego historia zaczęła się w czasach amerykańskiej prohibicji, kiedy świeża mięta i sok z cytryny pomagały ukryć smak kiepskiego ginu.","Ta tajemnica przetrwała ponad sto lat i chyba właśnie dlatego dodaje mu tyle uroku."],img:"assets/smak-southside.jpg?v=atlas-final-1",ingredients:["50 ml ginu","25 ml świeżo wyciśniętego soku z cytryny","20 ml syropu cukrowego","8–10 świeżych listków mięty","kostki lodu"],steps:["Delikatnie ugnieć listki mięty w shakerze lub wysokiej szklance. Nie rozcieraj ich zbyt mocno – mają uwolnić aromat, a nie gorycz.","Dodaj gin, sok z cytryny, syrop cukrowy i garść kostek lodu.","Energicznie wstrząsaj przez około 15 sekund.","Przelej przez sitko do dobrze schłodzonego kieliszka koktajlowego.","Udekoruj listkiem mięty."],tip:"Najpierw potrzyj listek mięty między palcami. Dopiero potem dodaj go jako ozdobę drinka. To wystarczy, żeby uwolnił cały swój aromat."}};
 const smellSections={poludnie:{title:"Południe",text:["Słońce zmienia zapach świata.","Im wyżej wznosi się nad horyzontem, tym intensywniej pachną cytrusy, rozmaryn, tymianek, lawenda i rozgrzane sosny piniowe. Ciepło uwalnia z roślin naturalne olejki eteryczne, dlatego południe pachnie zupełnie inaczej niż poranek.","W powietrzu miesza się zapach morza, rozgrzanych kamieni i śródziemnomorskich ziół. Wszystko staje się intensywniejsze. To właśnie ten aromat najdłużej zostaje w pamięci po powrocie z południa Europy."],places:["kos","hvar","toskania"]},wiosna:{title:"Wiosna",text:["Jest taki czas, który trwa zaledwie kilka dni w roku.","Właśnie wtedy drzewa owocowe zamieniają się w białe i różowe obłoki kwiatów, a powietrze wypełnia delikatny zapach, którego nie da się pomylić z żadnym innym. Słodki, świeży i lekki. Nie pachną pojedyncze kwiaty. Pachnie całe powietrze. A lekki podmuch wiatru unosi płatki nad ziemią."],places:["lacko","sandomierz"]},magnetyzm:{title:"Magnetyzm",text:["Zapach potrafi być zmysłowy. Intrygujący.","Najbardziej niezwykłe kompozycje rodzą się z połączeń, które na pierwszy rzut oka nie powinny do siebie pasować.","Świeżość i ciepło. Delikatność, intensywność i nieoczywisty spokój.","A do tego głęboka nuta, która pozostaje jeszcze długo po tym, gdy wszystko inne już zniknie.","To połączenie ma w sobie coś, co sprawia, że chcę podejść do Ciebie bliżej.","Tak pachniesz dla mnie Ty."],places:[]}};
-const smellPlaces={kos:{title:"Kos",text:["Najpiękniej pachnie wtedy, gdy słońce jest wysoko.","Rozgrzane kamienie, eukaliptusy, jaśmin, oleandry i zioła.","W południowym słońcu wszystko ma bardziej intensywny aromat.","Tak właśnie pachnie greckie lato."],media:["assets/kos-1.jpg?v=mobile-final-3","assets/kos-2.jpg?v=mobile-final-3","assets/kos-3.jpg?v=mobile-final-3"]},hvar:{title:"Hvar",text:["Ta wyspa pachnie przede wszystkim lawendą.","Kamienne ścieżki prowadzą przez rozgrzane wzgórza porośnięte rozmarynem, tymiankiem i szałwią. Wystarczy lekki podmuch wiatru, by powietrze wypełniło się zapachem ziół, zmieszanym z aromatem morza i sosen.","Najpiękniej czuje się go poza utartymi szlakami."],media:["assets/hvar-1.jpg?v=mobile-final-3","assets/hvar-2.jpg?v=mobile-final-3","assets/hvar-3.jpg?v=mobile-final-3"]},toskania:{title:"Toskania",text:["Najpiękniej pachnie wtedy, gdy dzień powoli zwalnia.","Rozgrzana ziemia, cyprysy, gaje oliwne i śródziemnomorskie zioła mieszają się z ciepłym powietrzem.","Najmocniej czuć go na bocznych drogach prowadzących między wzgórzami."],media:["assets/toskania-1.jpg?v=mobile-final-3","assets/toskania-2.jpg?v=mobile-final-3","assets/toskania-3.jpg?v=mobile-final-3"]},lacko:{title:"Łącko",text:["Na przełomie kwietnia i maja całe doliny wokół Łącka zamieniają się w kwitnące sady. To właśnie wtedy odbywa się Święto Kwitnącej Jabłoni – to najlepszy moment, by zobaczyć ten region skąpany w bieli."],media:["assets/lacko-1.jpg?v=mobile-final-3","assets/lacko-2.jpg?v=mobile-final-3","assets/lacko-3.jpg?v=mobile-final-3"]},sandomierz:{title:"Sandomierz",text:["Sandomierski Szlak Jabłkowy najlepiej odwiedzić na przełomie kwietnia i maja. To wtedy okoliczne wzgórza pokrywają się biało-różowymi kwiatami, a spacer między sadami staje się równie pięknym doświadczeniem jak zwiedzanie samego miasta."],media:["assets/sandomierz-1.jpg?v=mobile-final-3","assets/sandomierz-2.jpg?v=mobile-final-3","assets/sandomierz-3.jpg?v=mobile-final-3"]}};
+const smellPlaces={kos:{title:"Kos",text:["Najpiękniej pachnie wtedy, gdy słońce jest wysoko.","Rozgrzane kamienie, eukaliptusy, jaśmin, oleandry i zioła.","W południowym słońcu wszystko ma bardziej intensywny aromat.","Tak właśnie pachnie greckie lato."],media:["assets/kos-1.jpg?v=atlas-final-1","assets/kos-2.jpg?v=atlas-final-1","assets/kos-3.jpg?v=atlas-final-1"]},hvar:{title:"Hvar",text:["Ta wyspa pachnie przede wszystkim lawendą.","Kamienne ścieżki prowadzą przez rozgrzane wzgórza porośnięte rozmarynem, tymiankiem i szałwią. Wystarczy lekki podmuch wiatru, by powietrze wypełniło się zapachem ziół, zmieszanym z aromatem morza i sosen.","Najpiękniej czuje się go poza utartymi szlakami."],media:["assets/hvar-1.jpg?v=atlas-final-1","assets/hvar-2.jpg?v=atlas-final-1","assets/hvar-3.jpg?v=atlas-final-1"]},toskania:{title:"Toskania",text:["Najpiękniej pachnie wtedy, gdy dzień powoli zwalnia.","Rozgrzana ziemia, cyprysy, gaje oliwne i śródziemnomorskie zioła mieszają się z ciepłym powietrzem.","Najmocniej czuć go na bocznych drogach prowadzących między wzgórzami."],media:["assets/toskania-1.jpg?v=atlas-final-1","assets/toskania-2.jpg?v=atlas-final-1","assets/toskania-3.jpg?v=atlas-final-1"]},lacko:{title:"Łącko",text:["Na przełomie kwietnia i maja całe doliny wokół Łącka zamieniają się w kwitnące sady. To właśnie wtedy odbywa się Święto Kwitnącej Jabłoni – to najlepszy moment, by zobaczyć ten region skąpany w bieli."],media:["assets/lacko-1.jpg?v=atlas-final-1","assets/lacko-2.jpg?v=atlas-final-1","assets/lacko-3.jpg?v=atlas-final-1"]},sandomierz:{title:"Sandomierz",text:["Sandomierski Szlak Jabłkowy najlepiej odwiedzić na przełomie kwietnia i maja. To wtedy okoliczne wzgórza pokrywają się biało-różowymi kwiatami, a spacer między sadami staje się równie pięknym doświadczeniem jak zwiedzanie samego miasta."],media:["assets/sandomierz-1.jpg?v=atlas-final-1","assets/sandomierz-2.jpg?v=atlas-final-1","assets/sandomierz-3.jpg?v=atlas-final-1"]}};
 function para(a){return a.map(x=>`<p>${x}</p>`).join("")}
 function stopActiveMedia(){clearTimeout(galleryTimer);if(typeof stopSpotify==="function")stopSpotify();const video=$("image-video");if(video&&!video.paused){video.pause()}}
 function clearSecretInputs(){document.querySelectorAll(".secret-input").forEach(input=>{input.value="";const message=input.parentElement&&input.parentElement.querySelector(".message");if(message){message.textContent="";message.classList.remove("message-visible")}})}
@@ -23,6 +23,7 @@ function revealTiles(sel){document.querySelectorAll(sel).forEach((x,i)=>setTimeo
 function saveUnlock(i){if(i>unlocked){unlocked=i;try{sessionStorage.setItem(STORAGE,String(unlocked))}catch(e){}}renderWorlds()}
 function renderWorlds(){document.querySelectorAll(".world").forEach((b,i)=>{b.className="world world-visible";if(atlasComplete){b.disabled=false;b.setAttribute("aria-current","false");b.classList.add("world-open");return}b.disabled=i>unlocked;b.setAttribute("aria-current",i===unlocked?"step":"false");if(i===unlocked)b.classList.add("world-next");else if(i<unlocked)b.classList.add("world-completed");else b.classList.add("world-locked")})}
 function login(){const v=$("entry-password").value.trim();if(v!==PASS.entry){$("login-message").textContent="To jeszcze nie ten klucz.";$("login-message").classList.add("message-visible");$("entry-password").value="";return}unlocked=0;atlasComplete=false;try{sessionStorage.removeItem(STORAGE);sessionStorage.removeItem(COMPLETE_STORAGE)}catch(e){}renderWorlds();
+setTimeout(()=>atlasWarmMedia(),250);
 go("welcome-screen",700);setTimeout(()=>typed($("welcome-text"),WELCOME,()=>$("continue-to-atlas").classList.add("visible-control"),42,150),1000)}
 function intro(screen,textId,text,buttonId){go(screen);setTimeout(()=>typed($(textId),text,()=>$(buttonId).classList.add("visible-control"),75,340),1100)}
 function setTiles(container,data,attr){const c=$(container);c.innerHTML=Object.entries(data).map(([k,v])=>`<button class="sense-tile" data-${attr}="${k}">${v.title}</button>`).join("");revealTiles(`#${container} .sense-tile`)}
@@ -43,20 +44,69 @@ function stopSpotify(){
  const button=$("show-spotify-player");if(button)button.style.display="block"
 }
 
-const atlasBlobCache=new Map();
-const atlasObjectUrls=new Set();
 
-function atlasLoadBlobUrl(src){
- if(atlasBlobCache.has(src))return atlasBlobCache.get(src);
- const promise=fetch(src,{cache:"no-store"})
-  .then(r=>{if(!r.ok)throw new Error("media");return r.blob()})
-  .then(blob=>{
-   const url=URL.createObjectURL(blob);
-   atlasObjectUrls.add(url);
-   return url;
-  });
- atlasBlobCache.set(src,promise);
- return promise;
+const ATLAS_MEDIA_CACHE="atlas-media-final-v1";
+const atlasMediaPromises=new Map();
+const atlasMediaUrls=new Map();
+
+async function atlasOpenMediaCache(){
+ try{return await caches.open(ATLAS_MEDIA_CACHE)}catch(e){return null}
+}
+
+async function atlasMediaResponse(src){
+ if(atlasMediaPromises.has(src)){
+  const response=await atlasMediaPromises.get(src);
+  return response.clone();
+ }
+ const promise=(async()=>{
+  const cache=await atlasOpenMediaCache();
+  if(cache){
+   const hit=await cache.match(src);
+   if(hit)return hit;
+  }
+  const response=await fetch(src,{cache:"force-cache"});
+  if(!response.ok)throw new Error("media "+response.status);
+  if(cache){
+   try{await cache.put(src,response.clone())}catch(e){}
+  }
+  return response;
+ })();
+ atlasMediaPromises.set(src,promise);
+ try{
+  const response=await promise;
+  return response.clone();
+ }catch(e){
+  atlasMediaPromises.delete(src);
+  throw e;
+ }
+}
+
+async function atlasMediaBlobUrl(src){
+ if(atlasMediaUrls.has(src))return atlasMediaUrls.get(src);
+ const response=await atlasMediaResponse(src);
+ const blob=await response.blob();
+ const url=URL.createObjectURL(blob);
+ atlasMediaUrls.set(src,url);
+ return url;
+}
+
+function atlasPrefetchMedia(src){
+ return atlasMediaResponse(src).then(()=>true).catch(()=>false);
+}
+
+let atlasWarmStarted=false;
+async function atlasWarmMedia(){
+ if(atlasWarmStarted)return;
+ atlasWarmStarted=true;
+
+ // Audio first: this is the first multimedia world the recipient reaches.
+ for(const track of Object.values(sounds)){
+  await atlasPrefetchMedia(track.audio);
+ }
+
+ // Films are needed later, so download them only after music.
+ await atlasPrefetchMedia("assets/tango.mp4?v=atlas-final-1");
+ await atlasPrefetchMedia("assets/pragnienie-film.mp4?v=atlas-final-1");
 }
 
 function atlasPauseMedia(){
@@ -64,30 +114,6 @@ function atlasPauseMedia(){
  if(audio&&!audio.paused)audio.pause();
  const video=$("image-video");
  if(video&&!video.paused)video.pause();
-}
-
-
-const atlasVideoBlobCache=new Map();
-function atlasPrefetchVideo(src){
- if(atlasVideoBlobCache.has(src))return atlasVideoBlobCache.get(src);
- const promise=fetch(src,{cache:"no-store"})
-  .then(r=>{if(!r.ok)throw new Error("video");return r.blob()})
-  .then(blob=>URL.createObjectURL(blob))
-  .catch(()=>null);
- atlasVideoBlobCache.set(src,promise);
- return promise;
-}
-
-
-const atlasAudioBlobCache=new Map();
-function atlasPrefetchAudio(src){
- if(atlasAudioBlobCache.has(src))return atlasAudioBlobCache.get(src);
- const promise=fetch(src,{cache:"no-store"})
-  .then(r=>{if(!r.ok)throw new Error("audio");return r.blob()})
-  .then(blob=>URL.createObjectURL(blob))
-  .catch(()=>null);
- atlasAudioBlobCache.set(src,promise);
- return promise;
 }
 
 function buildAudioPlayer(track){
@@ -112,25 +138,25 @@ function buildAudioPlayer(track){
  let seeking=false;
 
  const revealCredit=()=>{
-   if(credit&&audio.currentTime>=4){
-     credit.classList.add("audio-credit-visible");
-     credit.setAttribute("aria-hidden","false");
-   }
+  if(credit&&audio.currentTime>=4){
+   credit.classList.add("audio-credit-visible");
+   credit.setAttribute("aria-hidden","false");
+  }
  };
  const sync=()=>{
-   const total=Number.isFinite(audio.duration)?audio.duration:0;
-   const now=Number.isFinite(audio.currentTime)?audio.currentTime:0;
-   if(!seeking)progress.value=total?String(now/total*100):"0";
-   if(!seeking)current.textContent=formatAudioTime(now);
-   duration.textContent=total?formatAudioTime(total):"–:––";
-   revealCredit();
+  const total=Number.isFinite(audio.duration)?audio.duration:0;
+  const now=Number.isFinite(audio.currentTime)?audio.currentTime:0;
+  if(!seeking)progress.value=total?String(now/total*100):"0";
+  if(!seeking)current.textContent=formatAudioTime(now);
+  duration.textContent=total?formatAudioTime(total):"–:––";
+  revealCredit();
  };
  const seekNow=()=>{
-   if(Number.isFinite(audio.duration)&&audio.duration>0){
-     const target=audio.duration*Number(progress.value)/100;
-     try{audio.currentTime=target}catch(e){}
-     current.textContent=formatAudioTime(target);
-   }
+  if(Number.isFinite(audio.duration)&&audio.duration>0){
+   const target=audio.duration*Number(progress.value)/100;
+   try{audio.currentTime=target}catch(e){}
+   current.textContent=formatAudioTime(target);
+  }
  };
  const beginSeek=()=>{seeking=true};
  const endSeek=()=>{seekNow();seeking=false;requestAnimationFrame(sync)};
@@ -143,9 +169,11 @@ function buildAudioPlayer(track){
  audio.addEventListener("ended",()=>{audio.currentTime=0;sync()});
 
  toggle.addEventListener("click",()=>{
-   if(!audio.src)return;
-   if(audio.paused){const p=audio.play();if(p&&typeof p.catch==="function")p.catch(()=>{});}
-   else audio.pause();
+  if(!audio.src)return;
+  if(audio.paused){
+   const p=audio.play();
+   if(p&&typeof p.catch==="function")p.catch(()=>{});
+  }else audio.pause();
  });
 
  progress.addEventListener("pointerdown",beginSeek);
@@ -157,20 +185,28 @@ function buildAudioPlayer(track){
  progress.addEventListener("touchend",endSeek,{passive:true});
  progress.addEventListener("mouseup",endSeek);
 
- atlasPrefetchAudio(track.audio).then(blobUrl=>{
-   if(!$("atlas-audio")||$("atlas-audio")!==audio)return;
-   audio.src=blobUrl||track.audio;
-   audio.load();
-   progress.disabled=false;
-   toggle.textContent="▶";
-   toggle.setAttribute("aria-label","Odtwórz");
-   const start=()=>{
-     sync();
-     const p=audio.play();
-     if(p&&typeof p.catch==="function")p.catch(()=>{});
-   };
-   if(audio.readyState>=1)start();
-   else audio.addEventListener("loadedmetadata",start,{once:true});
+ atlasMediaBlobUrl(track.audio).then(blobUrl=>{
+  if(!$("atlas-audio")||$("atlas-audio")!==audio)return;
+  audio.src=blobUrl;
+  audio.load();
+  progress.disabled=false;
+  toggle.textContent="▶";
+  toggle.setAttribute("aria-label","Odtwórz");
+  const startPlayback=()=>{
+   sync();
+   const p=audio.play();
+   if(p&&typeof p.catch==="function")p.catch(()=>{});
+  };
+  if(audio.readyState>=1)startPlayback();
+  else audio.addEventListener("loadedmetadata",startPlayback,{once:true});
+ }).catch(()=>{
+  audio.src=track.audio;
+  audio.load();
+  progress.disabled=false;
+  toggle.textContent="▶";
+  toggle.setAttribute("aria-label","Odtwórz");
+  const p=audio.play();
+  if(p&&typeof p.catch==="function")p.catch(()=>{});
  });
 }
 function setPanelState(panelId,open,instant=false){
@@ -221,21 +257,8 @@ const SCREEN_PARENT={
 function parentForCurrent(){const id=currentScreen&&currentScreen.id;if(id==="gallery-screen")return $("close-gallery").dataset.return||"worlds-screen";return SCREEN_PARENT[id]||null}
 window.addEventListener("popstate",()=>{const parent=parentForCurrent();if(!parent)return;stopActiveMedia();showScreen(parent,0);try{history.pushState({atlas:true,screen:parent},"",location.href)}catch(e){}});
 $("enter-button").onclick=login;$("entry-password").onkeydown=e=>{if(e.key==="Enter")login()};$("continue-to-atlas").onclick=()=>{go("title-screen");setTimeout(()=>$("atlas-title").classList.add("atlas-title-visible"),900)};$("atlas-title").onclick=()=>{renderWorlds();go("worlds-screen")};document.querySelectorAll(".world").forEach((b,i)=>b.onclick=()=>openWorld(i));
-$("open-sound-tiles").onclick=()=>{
- setTiles("sound-tiles",sounds,"sound");
- go("sound-tiles-screen");
- setTimeout(()=>{
-  Object.values(sounds).forEach((track,i)=>{
-   setTimeout(()=>atlasPrefetchAudio(track.audio),i*250);
-  });
- },200);
-};$("sound-tiles").onclick=e=>{const b=e.target.closest("[data-sound]");if(!b)return;currentSound=sounds[b.dataset.sound];atlasPrefetchAudio(currentSound.audio);$("sound-detail-title").textContent=currentSound.title;$("sound-detail-description").innerHTML=para(currentSound.p);stopSpotify();go("sound-detail-screen")};$("show-spotify-player").onclick=()=>{if(currentSound)buildAudioPlayer(currentSound)};$("back-to-sound-tiles").onclick=()=>{stopSpotify();go("sound-tiles-screen")};$("finish-sound-world").onclick=()=>go("sound-ending-screen");$("back-from-sound-ending").onclick=()=>go("sound-tiles-screen");$("sound-key-button").onclick=()=>checkKey("sound-key-input","sound-key-message",PASS.sound,1);$("sound-key-input").onkeydown=e=>{if(e.key==="Enter")$("sound-key-button").click()};
-$("open-image-tiles").onclick=()=>{
- setTiles("image-tiles",images,"image");
- go("image-tiles-screen");
- setTimeout(()=>atlasPrefetchVideo("assets/tango.mp4"),300);
- setTimeout(()=>atlasPrefetchVideo("assets/pragnienie-film.mp4"),1800);
-};$("image-tiles").onclick=e=>{const b=e.target.closest("[data-image]");if(!b)return;currentImage=images[b.dataset.image];if(currentImage.video)atlasPrefetchVideo(currentImage.video);$("image-detail-title").textContent=currentImage.title;$("image-main-text").innerHTML=para(currentImage.main);$("image-why-text").innerHTML=para(currentImage.why);setPanelState("image-why-text",false,true);$("toggle-image-why").textContent=currentImage.whyLabel||"Dlaczego zachwyca…";go("image-detail-screen")};$("toggle-image-why").onclick=()=>togglePanel("image-why-text");$("show-image-gallery").onclick=()=>{
+$("open-sound-tiles").onclick=()=>{setTiles("sound-tiles",sounds,"sound");go("sound-tiles-screen")};$("sound-tiles").onclick=e=>{const b=e.target.closest("[data-sound]");if(!b)return;currentSound=sounds[b.dataset.sound];atlasPrefetchMedia(currentSound.audio);$("sound-detail-title").textContent=currentSound.title;$("sound-detail-description").innerHTML=para(currentSound.p);stopSpotify();go("sound-detail-screen")};$("show-spotify-player").onclick=()=>{if(currentSound)buildAudioPlayer(currentSound)};$("back-to-sound-tiles").onclick=()=>{stopSpotify();go("sound-tiles-screen")};$("finish-sound-world").onclick=()=>go("sound-ending-screen");$("back-from-sound-ending").onclick=()=>go("sound-tiles-screen");$("sound-key-button").onclick=()=>checkKey("sound-key-input","sound-key-message",PASS.sound,1);$("sound-key-input").onkeydown=e=>{if(e.key==="Enter")$("sound-key-button").click()};
+$("open-image-tiles").onclick=()=>{setTiles("image-tiles",images,"image");go("image-tiles-screen")};$("image-tiles").onclick=e=>{const b=e.target.closest("[data-image]");if(!b)return;currentImage=images[b.dataset.image];if(currentImage.video)atlasPrefetchMedia(currentImage.video);$("image-detail-title").textContent=currentImage.title;$("image-main-text").innerHTML=para(currentImage.main);$("image-why-text").innerHTML=para(currentImage.why);setPanelState("image-why-text",false,true);$("toggle-image-why").textContent=currentImage.whyLabel||"Dlaczego zachwyca…";go("image-detail-screen")};$("toggle-image-why").onclick=()=>togglePanel("image-why-text");$("show-image-gallery").onclick=()=>{
  if(currentImage.video){
   stopSpotify();
   const video=$("image-video");
@@ -244,35 +267,34 @@ $("open-image-tiles").onclick=()=>{
   video.preload="auto";
   go("video-screen",0);
 
-  const startWith=src=>{
-   video.src=src;
+  const beginOriginal=()=>{
+   video.src=original;
    video.load();
    const p=video.play();
    if(p&&typeof p.catch==="function")p.catch(()=>{});
   };
 
-  const cached=atlasVideoBlobCache.get(original);
-  if(cached){
-   cached.then(blobUrl=>startWith(blobUrl||original));
-  }else{
-   startWith(original);
-   atlasPrefetchVideo(original).then(blobUrl=>{
-    if(!blobUrl || !video.src || !video.src.includes(original))return;
-    const at=Number.isFinite(video.currentTime)?video.currentTime:0;
-    const wasPlaying=!video.paused;
-    video.src=blobUrl;
-    video.load();
-    const restore=()=>{
-     try{video.currentTime=at}catch(e){}
-     if(wasPlaying){
-      const q=video.play();
-      if(q&&typeof q.catch==="function")q.catch(()=>{});
-     }
-    };
-    if(video.readyState>=1)restore();
-    else video.addEventListener("loadedmetadata",restore,{once:true});
-   });
-  }
+  // Start without waiting, so there is no blank 15-second screen.
+  beginOriginal();
+
+  // The prefetched/cached Blob gives reliable seeking on Android and iPhone.
+  atlasMediaBlobUrl(original).then(blobUrl=>{
+   if(currentScreen!==screens["video-screen"])return;
+   if(video.src===blobUrl)return;
+   const at=Number.isFinite(video.currentTime)?video.currentTime:0;
+   const wasPlaying=!video.paused;
+   video.src=blobUrl;
+   video.load();
+   const restore=()=>{
+    try{video.currentTime=at}catch(e){}
+    if(wasPlaying){
+     const p=video.play();
+     if(p&&typeof p.catch==="function")p.catch(()=>{});
+    }
+   };
+   if(video.readyState>=1)restore();
+   else video.addEventListener("loadedmetadata",restore,{once:true});
+  }).catch(()=>{});
  }else{
   openGallery(currentImage.media,"image-detail-screen");
  }
